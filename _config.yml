@@ -1,0 +1,14 @@
+# GitHub Pages builds this repo with Jekyll. The site is plain HTML and uses none
+# of it; this file exists only to keep the working notes off the public site.
+# The repo is private, but everything Pages copies is public at lumarelectric.ca,
+# and until 2026-10-29 /CLAUDE.md, /README.md and /design/*.md were readable there.
+# A new Markdown file at the root, or a new notes folder, belongs on this list.
+# llms.txt and robots.txt are meant to be public and stay off it.
+exclude:
+  - AGENTS.md
+  - CLAUDE.md
+  - DESIGN.md
+  - README.md
+  - design
+  - calculator/README.md
+  - images/CREDITS.md

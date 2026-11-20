@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lumarelectric.ca/sitemap.xml
+
+LLM: https://lumarelectric.ca/llms.txt

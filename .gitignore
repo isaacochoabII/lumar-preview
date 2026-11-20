@@ -1,0 +1,15 @@
+.DS_Store
+**/.DS_Store
+node_modules/
+*.log
+.venv/
+__pycache__/
+
+# Camera originals — the web-sized copies live in images/live/
+photos golf/
+
+# Original photos dropped in for processing; the web copies live in images/live/
+images/incoming/
+
+# Photo package prepared for the Google Business Profiles (not part of the site)
+images/gbp-upload/

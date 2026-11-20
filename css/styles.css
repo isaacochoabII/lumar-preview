@@ -1,0 +1,2230 @@
+/* ===================================================
+   LuMar Electric — light theme, orange accent
+   Editorial layout system: white base, #f45b1e accent,
+   Roboto, 1400px container. Shared across all pages.
+   =================================================== */
+
+:root {
+  /* Brand */
+  --orange: #f45b1e;
+  --orange-dark: #d9531a;
+  --orange-soft: #fff1ea;
+  /* The brand orange measures 3.3:1 against white -- fine for a large field or
+     a 24px heading, a fail for 15px link text. Small orange text on a light
+     ground uses this deeper shade of the same hue (5.2:1); buttons keep the
+     true brand orange and carry ink text instead of white (5.5:1). */
+  --orange-ink: #c2410c;
+
+  /* Neutrals */
+  --ink: #14161a;          /* headings */
+  --body: #4a5057;         /* body copy */
+  --muted: #6b7279;          /* 4.9:1 on white; was #868d95 at 3.4:1 */
+  --line: #e6e9ec;
+  --hair: #f0f2f4;
+  --bg: #ffffff;
+  --surface: #ffffff;      /* panels that sit on the page: nav, menus, cards, inputs */
+  --on-orange: #14161a;    /* type on the brand orange -- black in both themes */
+  --bg-alt: #f6f7f9;
+  --dark: #0b0b0c;
+  --dark-2: #131519;
+
+  /* Rhythm */
+  --max: 1400px;
+  --gutter: 26px;
+  --nav-h: 84px;
+  --s-section: clamp(72px, 8vw, 132px);
+
+  --ease: cubic-bezier(.22, .68, .24, 1);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: 'Roboto', system-ui, -apple-system, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--body);
+  font-size: 17px;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+img, svg, video { max-width: 100%; display: block; }
+button, input, select, textarea { font: inherit; color: inherit; }
+
+h1, h2, h3, h4, h5, h6 { color: var(--ink); line-height: 1.08; font-weight: 700; }
+h1 { font-size: clamp(2.1rem, 4.4vw, 3.4rem); font-weight: 900; letter-spacing: -.028em; }
+h2 { font-size: clamp(1.8rem, 3.4vw, 3rem); letter-spacing: -.024em; }
+h3 { font-size: clamp(1.25rem, 1.9vw, 1.6rem); letter-spacing: -.014em; }
+h4 { font-size: clamp(1.1rem, 1.5vw, 1.32rem); letter-spacing: -.012em; }
+
+p + p { margin-top: 1.05em; }
+strong { color: var(--ink); font-weight: 700; }
+
+.container { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+.container-narrow { max-width: 860px; }
+
+.section { padding: var(--s-section) 0; }
+.section-sm { padding: calc(var(--s-section) * .55) 0; }
+.section-alt { background: var(--bg-alt); }
+/* Fallback boundary when two adjacent blocks can't be given different
+   backgrounds — added automatically by the generator, never by hand. */
+.section--ruled { border-top: 1px solid var(--line); }
+.section-dark.section--ruled,
+.careers-band.section--ruled { border-top-color: rgba(255,255,255,.14); }
+.careers-band--quiet.section--ruled { border-top-color: var(--line); }
+.band + .band { border-top: 1px solid rgba(255,255,255,.12); }
+.section-dark { background: var(--dark-2); color: #b9bfc6; }
+.section-dark h1, .section-dark h2, .section-dark h3, .section-dark h4 { color: #fff; }
+
+.center { text-align: center; }
+.orange { color: var(--orange); }
+.lead { font-size: clamp(1.1rem, 1.5vw, 1.3rem); line-height: 1.5; color: var(--ink); font-weight: 400; }
+.muted { color: var(--muted); }
+
+.bg-grid {
+  background-image: url('../images/live/bg-grid.webp');
+  background-size: cover;
+  background-position: center;
+}
+
+/* ---------- Eyebrow + section headers ----------
+   Left-aligned by default so pages read like an article
+   rather than a stack of centered widgets. */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--orange-ink);
+  font-weight: 700;
+  font-size: .78rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.eyebrow::after {
+  content: '';
+  height: 1px;
+  width: 54px;
+  background: currentColor;
+  opacity: .45;
+}
+
+/* Two-column editorial header: heading left, supporting copy right.
+   Works off the existing markup — no wrapper elements needed. */
+.section-head {
+  display: grid;
+  /* Heading gets the weight; the support column stays a readable 50ch rather
+     than drifting to the far edge on a very wide screen. */
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr);
+  column-gap: clamp(30px, 3.5vw, 64px);
+  /* Tops, not bottoms. The two columns are almost never the same height --
+     a one-line heading beside a seven-line paragraph -- and aligning their
+     bottoms drops the heading to the floor of the row, opening a dead
+     diagonal gap across the section. */
+  align-items: start;
+  margin: 0 0 clamp(42px, 5vw, 72px);
+}
+.section-head > .eyebrow { grid-column: 1 / -1; }
+.section-head > h1, .section-head > h2 { grid-column: 1; }
+.section-head > p { grid-column: 2; font-size: 1.05rem; max-width: 50ch; }
+.section-head > p.lead { font-size: clamp(1.05rem, 1.25vw, 1.18rem); }
+.section-head > p + p { margin-top: 14px; }
+
+.section-head--center,
+.container-narrow .section-head { display: block; max-width: 62ch; }
+.section-head--center { margin-left: auto; margin-right: auto; text-align: center; }
+.section-head--center .eyebrow { justify-content: center; }
+.section-head--center .eyebrow::after { display: none; }
+.section-head--center > p { max-width: none; margin-top: 18px; }
+
+@media (max-width: 900px) {
+  .section-head { display: block; }
+  .section-head > p { max-width: 62ch; margin-top: 18px; }
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 30px;
+  font-weight: 700;
+  font-size: .98rem;
+  line-height: 1.2;
+  letter-spacing: .005em;
+  border: 1.5px solid transparent;
+  border-radius: 0;
+  cursor: pointer;
+  text-align: center;
+  transition: background .2s var(--ease), color .2s var(--ease),
+              border-color .2s var(--ease), transform .2s var(--ease);
+}
+.btn svg { width: 18px; height: 18px; flex: none; transition: transform .2s var(--ease); }
+.btn:hover svg { transform: translateX(3px); }
+.btn-primary { background: var(--orange); color: var(--on-orange); }
+.btn-primary:hover { background: var(--ink); color: var(--bg); }
+.btn-dark { background: var(--dark); color: #fff; }
+.btn-dark:hover { background: var(--orange); color: var(--on-orange); }
+.btn-outline { border-color: var(--line); color: var(--ink); background: transparent; }
+.btn-outline:hover { border-color: var(--ink); color: var(--ink); }
+.btn-ghost { border-color: rgba(255,255,255,.5); color: #fff; background: transparent; }
+.btn-ghost:hover { background: #fff; color: var(--ink); border-color: #fff; }
+.btn-lg { padding: 19px 38px; font-size: 1.05rem; }
+.btn-sm { padding: 12px 22px; font-size: .9rem; }
+.btn-caps { text-transform: uppercase; letter-spacing: .08em; font-size: .88rem; }
+
+.link-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--orange-ink);
+  font-weight: 700;
+  font-size: .96rem;
+}
+.link-more svg { width: 17px; height: 17px; transition: transform .2s var(--ease); }
+.link-more:hover svg { transform: translateX(4px); }
+.link-inline {
+  color: var(--ink);
+  font-weight: 700;
+  box-shadow: inset 0 -2px 0 var(--orange);
+  transition: box-shadow .2s var(--ease), color .2s var(--ease);
+}
+.link-inline:hover { color: var(--orange-ink); box-shadow: inset 0 -12px 0 var(--orange-soft); }
+
+/* One visible focus ring for everything a keyboard can reach. */
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+
+/* ---------- Nav ---------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  transition: background .3s var(--ease), border-color .3s var(--ease);
+}
+.nav-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  min-height: var(--nav-h);
+}
+.nav-logo { position: relative; flex: none; display: block; }
+.nav-logo img { width: 178px; height: auto; transition: opacity .3s var(--ease); }
+.nav-logo-light { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+
+.nav-menu { display: flex; align-items: center; gap: 6px; flex: 1 1 auto; }
+.nav-menu > li { list-style: none; position: relative; }
+.nav-menu > li > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 15px;
+  font-size: .96rem;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+  transition: color .2s var(--ease);
+}
+.nav-menu > li > a:hover, .nav-menu > li.current > a { color: var(--orange-ink); }
+/* The current section is marked by a bar, not by colour alone. */
+.nav-menu > li.current > a { box-shadow: inset 0 -3px 0 var(--orange); }
+.nav-caret { width: 8px; height: 8px; flex: none; opacity: .5; transition: transform .2s var(--ease); }
+.nav-menu > li:hover .nav-caret { transform: rotate(180deg); }
+
+.nav-sub {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 268px;
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  box-shadow: 0 24px 54px rgba(12, 16, 22, .13);
+  padding: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  /* Closing waits 250ms: a pointer that drifts off the menu for a moment on its
+     way to an item does not lose it. Opening is immediate (rule below). */
+  transition: opacity .2s var(--ease) .15s, transform .2s var(--ease) .15s, visibility 0s .35s;
+}
+/* The 6px between the menu item and its dropdown belonged to neither, so the
+   dropdown began to close as the pointer crossed it -- measured: hovered=false
+   in the gap. This invisible strip makes the gap part of the dropdown. */
+.nav-sub::before { content: ''; position: absolute; left: 0; right: 0; top: -14px; height: 14px; }
+.nav-menu > li:hover .nav-sub,
+.nav-menu > li:focus-within .nav-sub { opacity: 1; visibility: visible; transform: translateY(0); transition: opacity .2s var(--ease), transform .2s var(--ease), visibility 0s; }
+.nav-sub li { list-style: none; }
+.nav-sub a {
+  display: block;
+  padding: 11px 14px;
+  font-size: .93rem;
+  color: var(--ink);
+  transition: background .16s var(--ease), color .16s var(--ease);
+}
+.nav-sub a:hover { background: var(--orange-soft); color: var(--orange-ink); }
+
+.nav-end { display: flex; align-items: center; gap: 20px; flex: none; }
+.nav-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: .95rem;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.nav-phone svg { width: 16px; height: 16px; color: var(--orange); }
+.nav-phone:hover { color: var(--orange-ink); }
+.nav-cta { background: var(--orange); color: var(--on-orange); font-weight: 700; font-size: .95rem; padding: 14px 24px; white-space: nowrap; transition: background .2s var(--ease), color .2s var(--ease); }
+.nav-cta:hover { background: var(--ink); color: var(--bg); }
+.nav-phones { display: none; }
+.nav-menu > li > a.nav-cta-mobile { display: none; }
+
+.nav-toggle { display: none; background: none; border: 0; padding: 10px; margin-left: auto; cursor: pointer; }
+.nav-toggle span { display: block; width: 26px; height: 2px; background: var(--ink); transition: background .3s var(--ease); }
+.nav-toggle span + span { margin-top: 6px; }
+
+/* Overlay nav — floats over a full-bleed hero, solidifies on scroll */
+.nav--overlay {
+  position: fixed;
+  left: 0; right: 0;
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom-color: transparent;
+}
+.nav--overlay:not(.is-solid) .nav-logo-dark { opacity: 0; }
+.nav--overlay:not(.is-solid) .nav-logo-light { opacity: 1; }
+.nav--overlay:not(.is-solid) .nav-menu > li > a,
+.nav--overlay:not(.is-solid) .nav-phone { color: #fff; }
+.nav--overlay:not(.is-solid) .nav-menu > li > a:hover,
+.nav--overlay:not(.is-solid) .nav-phone:hover { color: var(--orange); }
+.nav--overlay:not(.is-solid) .nav-toggle span { background: #fff; }
+.nav--overlay.is-solid {
+  background: var(--surface);
+  border-bottom-color: var(--line);
+}
+
+/* ===================================================
+   HERO — full viewport, layered imagery
+   =================================================== */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  background: var(--dark);
+}
+.hero-media { position: absolute; inset: 0; }
+.hero-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  will-change: opacity, transform;
+  animation: heroCycle 40s infinite;
+}
+.hero-media img:nth-child(1) { animation-delay: 0s; }
+.hero-media img:nth-child(2) { animation-delay: 8s; }
+.hero-media img:nth-child(3) { animation-delay: 16s; }
+.hero-media img:nth-child(4) { animation-delay: 24s; }
+.hero-media img:nth-child(5) { animation-delay: 32s; }
+/* One photograph, held still: a service call, not a slideshow of construction
+   sites. The cycle above stays for any page that still carries five. */
+.hero-media--single img { animation: none; opacity: 1; transform: none; object-position: 62% 40%; }
+
+/* Cross-fade plus a slow push-in, so the frame is never static. */
+@keyframes heroCycle {
+  0%   { opacity: 0; transform: scale(1.02); }
+  3%   { opacity: 1; }
+  20%  { opacity: 1; }
+  23%  { opacity: 0; transform: scale(1.12); }
+  100% { opacity: 0; transform: scale(1.12); }
+}
+
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(6,7,9,.94) 0%, rgba(6,7,9,.66) 34%, rgba(6,7,9,.22) 62%, rgba(6,7,9,.5) 100%),
+    linear-gradient(to right, rgba(6,7,9,.6) 0%, rgba(6,7,9,0) 62%);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  /* The home hero is taller than its own min-height because of what is in it --
+     a two-line h1, a sub, two buttons and the stat strip. Trimming the padding
+     is the only way to shrink it without dropping one of those. */
+  padding-top: calc(var(--nav-h) + 78px);
+  padding-bottom: 50px;
+}
+.hero .eyebrow { color: #fff; opacity: .82; margin-bottom: 26px; }
+.hero .eyebrow::after { background: var(--orange); opacity: 1; width: 68px; }
+.hero h1 { color: #fff; max-width: 19ch; text-wrap: balance; }
+.hero-underline { display: block; width: 240px; max-width: 46%; margin-top: 10px; color: var(--orange); }
+.hero-sub {
+  color: rgba(255,255,255,.82);
+  font-size: clamp(1.05rem, 1.45vw, 1.32rem);
+  line-height: 1.5;
+  max-width: 48ch;
+  margin-top: 30px;
+}
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 38px; }
+
+/* Credential strip pinned to the bottom of the hero */
+.hero-strip {
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid rgba(255,255,255,.16);
+}
+.hero-strip ul {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.hero-strip li {
+  padding: 22px 26px 24px 0;
+  color: rgba(255,255,255,.6);
+  font-size: .82rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.hero-strip li + li { padding-left: 26px; border-left: 1px solid rgba(255,255,255,.16); }
+.hero-strip b { display: block; color: #fff; font-size: 1.5rem; font-weight: 900; letter-spacing: -.02em; text-transform: none; margin-bottom: 3px; }
+/* The COR seal replaces a numeral in the strip, so it sits on the same line as
+   the other three: block, same bottom margin, height matched to the numerals
+   rather than to its own 300x208 source. Width stays auto -- see DESIGN.md. */
+.hero-strip img { display: block; height: 34px; width: auto; margin-bottom: 3px; }
+
+.hero-scroll {
+  position: absolute;
+  right: var(--gutter);
+  bottom: 122px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255,255,255,.66);
+  font-size: .74rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+}
+.hero-scroll::after {
+  content: '';
+  width: 1px;
+  height: 56px;
+  background: linear-gradient(to bottom, rgba(255,255,255,.7), transparent);
+  animation: scrollCue 2.4s var(--ease) infinite;
+  transform-origin: top;
+}
+@keyframes scrollCue {
+  0% { transform: scaleY(0); opacity: 0; }
+  40% { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(1); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-media img { animation: none; opacity: 0; transform: none; }
+  .hero-media img:first-child { opacity: 1; }
+  .hero-scroll::after { animation: none; }
+}
+
+/* ---------- Inner page hero ----------
+   Split, not full-bleed. Every inner page used to open on a full-screen dark
+   photograph with the headline in white across its foot -- 39 pages with one
+   shape, and on a phone the first screen held a photo and nothing to act on.
+   StoryBrand's grunt test asks the first screen to say what is offered, how it
+   makes life better and what to do next; this layout gives the copy the light
+   half of the screen, the photograph the other half, and keeps the button and
+   the phone number above the fold at every width. The home page keeps the one
+   full-bleed hero, so it stays the single display-type moment on the site. */
+.page-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+  min-height: clamp(500px, 68svh, 720px);
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+.page-hero > img {
+  grid-column: 2; grid-row: 1;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 42%;
+}
+.page-hero-scrim { display: none; }
+.page-hero-inner {
+  grid-column: 1; grid-row: 1;
+  align-self: center;
+  max-width: none;
+  margin: 0;
+  /* Left edge lines up with .container on any screen width. */
+  padding: clamp(44px, 5.5vw, 88px) clamp(28px, 4.5vw, 76px) clamp(44px, 5.5vw, 88px)
+           max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
+}
+.page-hero .eyebrow { color: var(--orange-ink); }
+.page-hero h1 { color: var(--ink); max-width: 18ch; text-wrap: balance; }
+.page-hero h1::after {
+  content: ''; display: block;
+  width: 64px; height: 5px; margin-top: 26px;
+  background: var(--orange);
+}
+.page-hero p { color: var(--body); font-size: clamp(1.05rem, 1.3vw, 1.22rem); line-height: 1.55; margin-top: 22px; max-width: 46ch; }
+.page-hero .btn { margin-top: 30px; }
+/* A secondary route under the hero CTA -- smaller than the lead. */
+.page-hero p.page-hero-aside { font-size: .98rem; margin-top: 18px; }
+.page-hero-aside a { color: var(--ink); font-weight: 700; text-decoration: underline; text-decoration-color: var(--orange); text-underline-offset: 4px; }
+/* The office number under the button: the lowest-friction path of all. */
+.page-hero-call {
+  display: flex; flex-wrap: wrap; gap: 6px 22px;
+  margin-top: 22px !important;
+  font-size: .8rem !important; letter-spacing: .1em; text-transform: uppercase; color: var(--muted) !important;
+}
+.page-hero-call a {
+  margin-left: 6px; color: var(--ink); font-weight: 700; font-size: 1.02rem;
+  letter-spacing: .01em; text-transform: none;
+  border-bottom: 2px solid var(--orange); padding-bottom: 1px;
+}
+.page-hero-call a:hover { color: var(--orange-ink); }
+
+/* ---------- Breadcrumbs (generated) ---------- */
+.crumbs { margin-bottom: 22px; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.crumbs ol { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 0; }
+.crumbs li + li::before { content: '/'; margin: 0 10px; color: var(--line); }
+.crumbs a { color: var(--muted); font-weight: 500; }
+.crumbs a:hover { color: var(--orange-ink); }
+.crumbs [aria-current] { color: var(--ink); font-weight: 700; }
+
+@media (max-width: 860px) {
+  .page-hero { grid-template-columns: 1fr; min-height: 0; }
+  .page-hero-inner { grid-column: 1; grid-row: 1; padding: 34px var(--gutter) 36px; }
+  .page-hero > img { grid-column: 1; grid-row: 2; height: auto; aspect-ratio: 16 / 10; }
+  .page-hero h1::after { margin-top: 20px; width: 52px; height: 4px; }
+  .page-hero .btn { width: 100%; }
+}
+
+/* ===================================================
+   Service rows -- numbered, hairline-separated
+   ===================================================
+   The four-up icon tile with a "Learn More" button under each was the most
+   recognisable Elementor habit left on the site. A service list is a list: a
+   number, the name, one line on what it is, and a verb that says where the link
+   goes. Icons are kept in the markup (some fragments still carry them) but not
+   shown -- they repeated the heading in a picture. */
+/* The columns belong to the list, not to each row: every .svc-card is a subgrid
+   of .svc-grid. While each row sized its own `auto` link column, a long link
+   ("Bucket truck services") pulled its description left and a row with no link
+   let it drift right, so no two descriptions started at the same x. */
+.svc-grid {
+  display: grid;
+  grid-template-columns: 64px minmax(0, .9fr) minmax(0, 1.3fr) auto;
+  column-gap: clamp(20px, 3vw, 48px);
+  counter-reset: svc;
+  border-top: 2px solid var(--ink);
+}
+/* Fragments still pass an inline column count from the tile days; a list does
+   not have those columns, so it is overridden. */
+.svc-grid[style] { grid-template-columns: 64px minmax(0, .9fr) minmax(0, 1.3fr) auto !important; }
+.lane .svc-grid { grid-template-columns: minmax(0, 1fr); }
+.svc-card {
+  counter-increment: svc;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 64px minmax(0, .9fr) minmax(0, 1.3fr) auto;
+  grid-template-columns: subgrid;
+  align-items: baseline;
+  gap: 8px clamp(20px, 3vw, 48px);
+  padding: 28px 0 30px;
+  border-bottom: 1px solid var(--line);
+  transition: background .2s var(--ease);
+}
+.svc-card::before {
+  content: counter(svc, decimal-leading-zero);
+  font-size: .82rem; font-weight: 700; letter-spacing: .14em;
+  color: var(--orange-ink);
+}
+.svc-card .ic { display: none; }
+.svc-card h3, .svc-card h4 { grid-column: 2; margin: 0; font-size: clamp(1.1rem, 1.45vw, 1.3rem); }
+.svc-card p { grid-column: 3; font-size: .98rem; margin: 0; }
+.svc-card > .btn, .svc-card > .link-more { grid-column: 4; margin: 0; white-space: nowrap; align-self: center; }
+.svc-card > p + .btn, .svc-card > p + .link-more { margin-top: 0; }
+/* A card with no description: the link moves into the description column. */
+.svc-card h4 + .link-more, .svc-card h3 + .link-more { grid-column: 3 / -1; justify-self: start; }
+.svc-card .btn-primary { background: transparent; color: var(--ink); border-color: var(--line); padding: 11px 20px; }
+.svc-card:hover .btn-primary { background: var(--orange); color: var(--on-orange); border-color: var(--orange); }
+.svc-card:hover h3, .svc-card:hover h4 { color: var(--orange-ink); }
+@media (max-width: 900px) {
+  .svc-grid, .svc-grid[style] { grid-template-columns: 48px minmax(0, 1fr) !important; }
+  .lane .svc-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .svc-card { grid-template-columns: 48px minmax(0, 1fr); grid-template-columns: subgrid; }
+  .svc-card p, .svc-card > .btn, .svc-card > .link-more,
+  .svc-card h4 + .link-more, .svc-card h3 + .link-more { grid-column: 2; justify-self: start; }
+  .svc-card > .btn, .svc-card > .link-more { margin-top: 10px; }
+}
+
+/* ---------- Split (image + copy) ---------- */
+/* Stretch, not centre: a short photo floating beside a tall column of copy is
+   the single most common way these sections look broken. */
+.split { display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; gap: clamp(36px, 5vw, 76px); }
+.split-media { position: relative; min-height: 320px; overflow: hidden; }
+.split-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* The van-and-duplex frame is used in five boxes whose ratio runs from 0.47 (a
+   two-column split at 900px) to 1.6 (the home hero). Centred, a tall crop keeps
+   only bare house wrap and cuts the van -- the one thing that says LuMar -- in
+   half. This focal point keeps the van and the garage door in every crop. */
+img[src$="merlot-developments-lumar-van.webp"] { object-position: 22% 62%; }
+/* A form is read top-down; centring it against a short intro strands both. */
+.split:has(form) { align-items: start; }
+.split:has(form) .split-media { min-height: 0; }
+
+/* Partner logo — a small wordmark alone in a half-width column reads as a
+   mistake, so it gets a framed panel instead. */
+.logo-panel {
+  display: grid;
+  place-items: center;
+  padding: clamp(36px, 5vw, 64px);
+  border: 1px solid var(--line);
+  background: #fff;
+  min-height: 320px;
+}
+/* min(), not a bare 300px: the panel's own padding leaves ~250px of content
+   width on a 375px phone, so a fixed 300px cap overflowed the viewport. */
+.logo-panel img { position: static; width: auto; max-width: min(300px, 100%); height: auto; object-fit: contain; }
+.logo-panel figcaption { margin-top: 22px; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); text-align: center; }
+.split-flip .split-media { order: 2; }
+.split-body > .eyebrow { margin-bottom: 20px; }
+.split-body h2 { margin-bottom: 22px; }
+.split-body .btn { margin-top: 30px; }
+
+/* Tighter variant: narrower media, checklist in two columns. Used where a
+   section repeats content that lives in full elsewhere. */
+.split--compact { grid-template-columns: minmax(0, .76fr) minmax(0, 1.24fr); }
+.split--compact .checks { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; }
+
+/* ---------- Office grid (compact locations) ---------- */
+.office-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: rgba(255,255,255,.14); border-block: 1px solid rgba(255,255,255,.14); }
+.office { background: var(--dark-2); padding: clamp(30px, 3vw, 46px) clamp(24px, 2.6vw, 42px); }
+.office:first-child { padding-left: 0; }
+.office:last-child { padding-right: 0; }   /* both columns the same width */
+.office h3 { color: #fff; font-size: clamp(1.5rem, 2.4vw, 2rem); margin-bottom: 16px; }
+.office .link-more { margin-top: 26px; }
+.section-dark .link-inline { color: #fff; box-shadow: inset 0 -2px 0 var(--orange); }
+.section-dark .link-inline:hover { color: var(--orange); }
+
+/* ---------- Post list (compact blog index) ---------- */
+.post-list { list-style: none; border-top: 1px solid var(--line); }
+.post {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(20px, 3vw, 46px);
+  padding: 26px 0;
+  border-bottom: 1px solid var(--line);
+}
+.post-media { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--bg-alt); }
+.post-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease); }
+.post:hover .post-media img { transform: scale(1.06); }
+.post h3 { font-size: clamp(1.1rem, 1.5vw, 1.35rem); }
+.post h3 a:hover { color: var(--orange); }
+.post p { margin-top: 10px; font-size: .95rem; max-width: 62ch; }
+.post .card-meta { margin: 0 0 10px; }
+.post > .link-more { white-space: nowrap; }
+
+/* A section whose children run full-bleed under a contained header. */
+.section-bands { padding-bottom: 0; }
+.section-bands > .band:last-child,
+.section-bands > .feature:last-child { margin-bottom: 0; }
+.section-foot { margin-top: clamp(38px, 4vw, 56px); }
+
+/* Full-bleed dark band (locations) */
+.band { display: grid; grid-template-columns: 1fr 1fr; }
+/* The media cell is absolutely filled so the photo's intrinsic ratio can never
+   stretch the row — otherwise a wide viewport blows the band up to ~750px. */
+.band-media { position: relative; min-height: 480px; overflow: hidden; }
+.band-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+/* A single centred track rather than left-padding: on a 2560px screen the copy
+   sits in the optical middle of its half instead of hugging the split line,
+   and the measure stays readable instead of running 110 characters wide. */
+.band-body {
+  background: var(--dark-2);
+  color: #a9b0b8;
+  padding: clamp(48px, 6vw, 88px) clamp(26px, 4vw, 64px);
+  display: grid;
+  grid-template-columns: minmax(0, 36rem);
+  justify-content: center;
+  align-content: center;
+}
+.band-body .btn, .band-body .link-more { justify-self: start; }
+.band-body h2, .band-body h3 { color: #fff; }
+.band-body p { margin-top: 18px; }
+.band-body .link-inline { color: #fff; box-shadow: inset 0 -2px 0 var(--orange); }
+.band-body .link-inline:hover { color: var(--orange); box-shadow: inset 0 -2px 0 var(--orange); }
+.band-flip .band-media { order: 2; }
+
+.contact-lines { list-style: none; margin-top: 30px; display: grid; gap: 13px; }
+.contact-lines li { display: flex; align-items: flex-start; gap: 13px; }
+.contact-lines svg { width: 17px; height: 17px; color: var(--orange); flex: none; margin-top: 5px; }
+.contact-lines a:hover { color: var(--orange); }
+
+/* ---------- Checklist ---------- */
+.checks { list-style: none; display: grid; gap: 13px; margin: 24px 0; }
+.checks li { display: flex; align-items: flex-start; gap: 13px; }
+.checks svg { width: 19px; height: 19px; color: var(--orange); flex: none; margin-top: 5px; }
+
+/* ---------- Testimonials ---------- */
+.rating-line { font-weight: 400; }
+.rating-line .stars { margin-right: 10px; transform: translateY(2px); }
+.stars { display: inline-flex; gap: 2px; color: var(--orange); }
+.stars svg { width: 15px; height: 15px; }
+.reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.review { background: var(--surface); padding: 34px 32px; display: flex; flex-direction: column; transition: background .28s var(--ease); }
+/* Inside a rail each card needs its own border — there is no shared 1px grid gap. */
+.scroller .review { border: 1px solid var(--line); }
+.review:hover { background: var(--bg-alt); }
+.review-head { display: flex; align-items: center; gap: 13px; }
+.review-avatar {
+  width: 40px; height: 40px; flex: none;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  display: grid; place-items: center;
+  font-weight: 700; font-size: .8rem;
+}
+.review-name { font-weight: 700; color: var(--ink); font-size: .98rem; }
+.review-date { font-size: .82rem; color: var(--muted); }
+.review .stars { margin: 18px 0 14px; }
+.review p { font-size: .97rem; }
+
+/* ---------- Featured project ---------- */
+.feature { position: relative; min-height: 640px; display: flex; align-items: center; overflow: hidden; background: var(--dark); }
+.feature > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.feature::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, rgba(6,7,9,.5), rgba(6,7,9,.1) 45%, rgba(6,7,9,.7));
+}
+.feature-card {
+  position: relative;
+  z-index: 2;
+  margin-left: auto;
+  max-width: 540px;
+  background: var(--dark-2);
+  border: 1px solid rgba(255,255,255,.1);
+  color: #a9b0b8;
+  padding: clamp(32px, 4vw, 54px);
+}
+.feature-card h2 { color: #fff; margin: 0 0 22px; }
+.feature-card .link-more { margin-top: 28px; }
+
+/* ---------- Careers strip ----------
+   Contained rather than a full-bleed 50/50: the copy spans the container, so
+   the orange field is never left empty however wide the viewport gets, and the
+   photo supports the message instead of dominating half the screen. */
+.careers-band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--orange);
+  color: var(--on-orange);
+}
+/* Flat brand orange with ink type. White on this orange is 3.3:1, which fails
+   for body copy; ink on it is 5.5:1. The diagonal hatch it used to carry was an
+   Elementor background preset. */
+.careers-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 76px);
+  padding-block: clamp(52px, 5.5vw, 82px);
+}
+.careers-band .eyebrow { color: var(--on-orange); }
+.careers-band .eyebrow::after { background: var(--on-orange); opacity: .5; }
+.careers-band h2 { color: var(--on-orange); max-width: 16ch; }
+.careers-band p { margin-top: 20px; max-width: 52ch; color: var(--on-orange); }
+.careers-band .link-inline { color: var(--on-orange); box-shadow: inset 0 -2px 0 var(--on-orange); }
+.careers-band .btn { margin-top: 30px; }
+.careers-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; }
+.careers-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* Alternating variant: photo on the left, copy on the right. */
+.careers-band--flip .careers-inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
+.careers-band--flip .careers-media { order: -1; }
+
+/* Quiet variant. Orange is reserved for the primary conversion moment; a
+   recruiting message must not out-shout "book a service call". */
+.careers-band--quiet { background: var(--bg-alt); color: var(--body); }
+.careers-band--quiet::before { display: none; }
+.careers-band--quiet h2, .careers-band--quiet .eyebrow { color: var(--ink); }
+.careers-band--quiet .eyebrow { color: var(--orange-ink); }
+.careers-band--quiet p { color: var(--body); }
+.careers-band--quiet .eyebrow { color: var(--orange); opacity: 1; }
+.careers-band--quiet .eyebrow::after { background: currentColor; opacity: .45; }
+.careers-band--quiet .perks li { border-color: var(--line); color: var(--muted); }
+
+.perks { list-style: none; display: flex; flex-wrap: wrap; gap: 9px; margin-top: 26px; }
+.perks li {
+  padding: 8px 14px;
+  border: 1.5px solid rgba(20,22,26,.4);
+  color: var(--on-orange);
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* ---------- The plan (StoryBrand: 3 steps) ---------- */
+.plan { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; counter-reset: plan; border-top: 1px solid var(--line); }
+.plan-step {
+  counter-increment: plan;
+  padding: 38px 34px 42px 0;
+  border-bottom: 1px solid var(--line);
+}
+.plan-step + .plan-step { padding-left: 34px; border-left: 1px solid var(--line); }
+.plan-step::before {
+  content: counter(plan);
+  display: grid;
+  place-items: center;
+  width: 46px; height: 46px;
+  background: var(--orange);
+  color: var(--on-orange);
+  font-size: 1.15rem;
+  font-weight: 900;
+  margin-bottom: 24px;
+}
+.plan-step h3 { font-size: clamp(1.15rem, 1.6vw, 1.4rem); margin-bottom: 12px; }
+/* A photo per step, from the October 2026 service-call shoot. The step number
+   moves onto the photo's corner so the three columns keep one top edge. */
+.plan--photos .plan-step { position: relative; }
+.plan--photos .plan-step::before { position: absolute; top: 38px; left: 0; z-index: 1; margin: 0; }
+.plan--photos .plan-step + .plan-step::before { left: 34px; }
+.plan-photo { margin: 0 0 24px; aspect-ratio: 4 / 3; overflow: hidden; background: var(--line); }
+.plan-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.plan-step p { font-size: .97rem; }
+
+/* ---------- Horizontal scroller ---------- */
+/* Rails live inside .container and show a whole number of cards, so nothing
+   ever bleeds past the page's safe margins. */
+.scroller {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  /* Native scrollbar hidden — the rail is driven by the arrow buttons, swipe
+     and keyboard. A stray system scrollbar made it read as a broken grid. */
+  scrollbar-width: none;
+}
+.scroller::-webkit-scrollbar { display: none; }
+.scroller:focus-visible { outline: 2px solid var(--orange); outline-offset: 4px; }
+.scroller-track {
+  --rail-gap: 26px;
+  --rail-per-view: 3;
+  list-style: none;
+  display: grid;
+  grid-auto-flow: column;
+  /* Exactly N cards per view, gaps included. */
+  grid-auto-columns: calc((100% - (var(--rail-per-view) - 1) * var(--rail-gap)) / var(--rail-per-view));
+  gap: var(--rail-gap);
+}
+.scroller-track > * { scroll-snap-align: start; }
+.proj-card .card-media { aspect-ratio: 4 / 3; }
+.proj-card h3 { font-size: clamp(1.15rem, 1.5vw, 1.4rem); }
+
+.rail-controls { display: flex; gap: 10px; justify-content: flex-end; margin-bottom: 22px; }
+.rail-btn {
+  width: 50px; height: 50px;
+  display: grid; place-items: center;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease), opacity .2s var(--ease);
+}
+.rail-btn svg { width: 20px; height: 20px; }
+.rail-btn:hover:not(:disabled) { background: var(--orange); border-color: var(--orange); color: var(--on-orange); }
+.rail-btn:disabled { opacity: .3; cursor: default; }
+.rail-btn[data-rail-prev] svg { transform: rotate(180deg); }
+
+.cta-center { background: var(--dark-2); color: #a9b0b8; text-align: center; padding: clamp(72px, 8vw, 116px) var(--gutter); }
+.cta-center h2 { color: #fff; }
+.cta-center p { margin: 20px auto 0; max-width: 58ch; }
+.cta-center .btn { margin-top: 32px; }
+
+/* ---------- Cards ---------- */
+.card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.card-grid-2 { grid-template-columns: repeat(2, 1fr); }
+/* No background: on a grey section a white fill turns the card into an unpadded
+   box with the copy jammed against its edge. The rule above the body does the
+   separating instead &mdash; "rules, not boxes". (.review keeps its own fill; that
+   one is meant to read as a card.) */
+.card { display: flex; flex-direction: column; }
+.card-media { display: block; aspect-ratio: 16 / 10; overflow: hidden; background: var(--bg-alt); }
+.card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+.card:hover .card-media img { transform: scale(1.05); }
+.card-body { padding: 28px 0 0; display: flex; flex-direction: column; flex: 1 1 auto; border-top: 2px solid var(--ink); margin-top: 22px; }
+.card-media + .card-body { margin-top: 22px; }
+.card-body > h3:first-child { margin-top: 0; }
+.card-body h3 a:hover { color: var(--orange); }
+.card-body p { margin-top: 14px; font-size: .97rem; }
+.card-meta { margin-top: 16px; font-size: .8rem; color: var(--muted); display: flex; gap: 9px; flex-wrap: wrap; letter-spacing: .06em; text-transform: uppercase; }
+/* A card's call to action sits on the bottom edge, so the buttons across a row
+   line up however unevenly the copy above them runs. The leftover space used to
+   be shared between the copy and the button, which let them drift apart by ~25px. */
+.card-body > .link-more,
+.card-body > p:has(> .btn) { margin-top: auto; padding-top: 20px; }
+
+/* ---------- Project specs + gallery ---------- */
+.specs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--line); }
+.specs div { padding: 26px 26px 28px 0; border-bottom: 1px solid var(--line); }
+.specs div + div { padding-left: 26px; border-left: 1px solid var(--line); }
+.specs dt { font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.specs dd { margin-top: 8px; font-weight: 700; color: var(--ink); font-size: 1.05rem; }
+
+.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.gallery img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform .8s var(--ease); }
+.gallery a, .gallery figure { overflow: hidden; }
+
+
+/* ---------- Team ---------- */
+.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.team-card img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.team-card h4 { margin-top: 18px; font-size: 1.08rem; }
+.team-card span { display: block; margin-top: 4px; color: var(--muted); font-size: .87rem; letter-spacing: .04em; }
+.team-email { display: inline-block; padding: 6px 0; color: var(--orange-ink); font-size: .87rem; line-height: 1.3; }
+.team-email:hover { text-decoration: underline; }
+
+/* ---------- Stats ---------- */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); }
+.stat { padding: 40px 26px 44px 0; border-bottom: 1px solid var(--line); }
+.stat + .stat { padding-left: 26px; border-left: 1px solid var(--line); }
+.stat b { display: block; font-size: clamp(2.4rem, 4.4vw, 3.6rem); font-weight: 900; color: var(--ink); line-height: 1; letter-spacing: -.03em; }
+.stat span { display: block; margin-top: 14px; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+
+/* ---------- Prose ---------- */
+/* A 720px measure in a 1400px container left 650px of nothing beside it.
+   The column is centred; the hero above it keeps its own left-aligned copy. */
+.prose { max-width: 720px; margin-inline: auto; }
+.prose > h1 { margin-bottom: 26px; }
+.prose h2 { font-size: clamp(1.5rem, 2.4vw, 2rem); margin: 52px 0 18px; }
+.prose h3 { margin: 36px 0 14px; }
+.prose ul, .prose ol { margin: 18px 0 18px 20px; display: grid; gap: 9px; }
+.prose img { margin: 36px 0; width: 100%; }
+/* A captioned photo is one unit: the figure owns the vertical rhythm, so the
+   caption stays 12px under its image instead of inheriting the image's 36px. */
+.prose figure.chapter-media { margin: 36px 0; }
+/* The 4/3 crop that suits the our-story chapter grid would slice the people at
+   the edges of a 3:2 photo, so in prose the frame is shown as shot. */
+.prose figure.chapter-media img { margin: 0; aspect-ratio: auto; }
+/* Two portrait photos side by side in a post. A lone 2:3 photo at the full
+   720px prose width would run over 1000px tall; paired, each is half that. */
+.prose .photo-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 36px 0; }
+.prose .photo-pair img { margin: 0; aspect-ratio: 2 / 3; object-fit: cover; height: auto; }
+.prose blockquote {
+  border-left: 2px solid var(--orange);
+  padding: 4px 0 4px 26px;
+  margin: 34px 0;
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  line-height: 1.45;
+  color: var(--ink);
+}
+.prose a:not(.btn):not(.link-more) {
+  color: var(--ink);
+  font-weight: 700;
+  box-shadow: inset 0 -2px 0 var(--orange);
+}
+.prose a:not(.btn):not(.link-more):hover { color: var(--orange); }
+
+/* ---------- Forms ---------- */
+.form { display: grid; gap: 16px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form label { font-weight: 700; font-size: .82rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); display: block; margin-bottom: 8px; }
+.form input, .form select, .form textarea {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 15px 16px;
+  font-size: 1rem;
+  border-radius: 0;
+  transition: border-color .2s var(--ease);
+}
+.form input:focus, .form select:focus, .form textarea:focus { outline: none; border-color: var(--orange); }
+.form textarea { min-height: 150px; resize: vertical; }
+.form .btn { justify-self: start; }
+
+/* ---------- Footer ---------- */
+.footer { background: var(--dark); color: #8b929a; padding: clamp(64px, 7vw, 96px) 0 32px; font-size: .95rem; }
+.footer h4 { color: #fff; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 18px; }
+.footer a:hover { color: var(--orange); }
+.footer-top { display: grid; grid-template-columns: 1.7fr 1fr 1fr 1.3fr; gap: clamp(32px, 4vw, 56px); }
+.footer-logo img { width: 190px; margin-bottom: 26px; }
+.footer .orange { box-shadow: inset 0 -1px 0 currentColor; }
+.footer-phone { display: inline-block; color: #fff; font-size: 1.28rem; font-weight: 700; margin-bottom: 18px; letter-spacing: -.01em; }
+.footer-hours { display: grid; gap: 1px; font-size: .9rem; }
+.footer-hours b { color: #fff; font-weight: 500; display: block; margin-top: 10px; }
+.socials { display: flex; gap: 10px; margin-top: 28px; }
+.socials a {
+  width: 40px; height: 40px;
+  border: 1px solid rgba(255,255,255,.18);
+  color: #fff;
+  display: grid; place-items: center;
+  transition: background .2s var(--ease), border-color .2s var(--ease);
+}
+.socials a:hover { background: var(--orange); border-color: var(--orange); color: #fff; }
+.socials svg { width: 17px; height: 17px; }
+.footer-cor { display: flex; gap: 22px; align-items: flex-start; }
+/* The seal is 300x208 — never let a square box squash it. */
+.footer-cor img { width: 116px; height: auto; flex: none; opacity: .9; object-fit: contain; }
+.footer-seals { display: flex; flex-direction: column; align-items: center; gap: 16px; flex: none; }
+.footer-cor .footer-15 { width: 88px; }
+.footer-cor p { font-size: .87rem; line-height: 1.55; }
+.footer-cor .footer-links { display: grid; gap: 7px; margin-top: 18px; }
+.footer-bottom {
+  margin-top: clamp(46px, 5vw, 68px);
+  padding-top: 26px;
+  border-top: 1px solid rgba(255,255,255,.1);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: .84rem;
+  color: #6d747c;
+}
+
+/* ---------- Reveal ----------
+   Retired. Every section used to fade up 22px as it scrolled into view -- the
+   stock Elementor entrance -- which also meant content was invisible until a
+   script ran. The class stays in the markup and in script.js; it does nothing. */
+.reveal { opacity: 1; transform: none; }
+
+/* ===================================================
+   Responsive
+   =================================================== */
+/* The nav needs ~1300px in English and ~1375px in French, but .container caps
+   at 1400px minus gutters -- so between the mobile toggle and roughly 1400px
+   the full-size bar does not fit and pushes .nav-end off the right edge. It
+   compacts here, not at 1240px, because 1280px laptops sit inside that band. */
+@media (max-width: 1400px) {
+  .nav-menu > li > a { padding: 10px 8px; font-size: .9rem; }
+  .nav-logo img { width: 150px; }
+  .nav-phone { display: none; }
+}
+
+@media (max-width: 1240px) {
+  .team-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 1024px) {
+  .nav, .nav--overlay { position: sticky; }
+  .nav--overlay { position: fixed; }
+  .nav-toggle { display: block; }
+  .nav-end { display: none; }
+  .nav-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 8px 0 20px;
+    box-shadow: 0 24px 46px rgba(12,16,22,.16);
+    border-top: 1px solid var(--hair);
+    display: none;
+    max-height: calc(100svh - var(--nav-h));
+    overflow-y: auto;
+  }
+  .nav-menu.open { display: flex; }
+  .nav-menu > li { width: 100%; }
+  /* Rules, not a floating list. Every other grid on the site separates with a
+     hairline; the mobile menu was the one place that did not, which is what
+     made it read as a pile of links rather than a menu. */
+  .nav-menu > li + li { border-top: 1px solid var(--hair); }
+  /* Careers and FR are a different audience -- on desktop a hairline divides
+     them from the buying steps. --line and --hair are ten shades apart, so
+     colour alone would not read as a break here; the gap is what does it. */
+  .nav-menu > .nav-aside { margin-top: 10px; border-top: 1px solid var(--line); }
+  /* No `justify-content: space-between` here. It applies to every direct <a>,
+     including the two phone numbers, and threw their digits to the opposite
+     edge with a dead gap across the middle of the row. The caret is the only
+     thing that belongs on the right, so it pushes itself there. */
+  .nav-menu > li > a { display: flex; align-items: center; width: 100%; padding: 15px var(--gutter); font-size: 1rem; color: var(--ink); }
+  .nav-menu > li > a .nav-caret { margin-left: auto; }
+  .nav--overlay:not(.is-solid) .nav-menu > li > a { color: var(--ink); }
+  .nav-sub {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+    border: 0;
+    background: var(--bg-alt);
+    display: none;
+    padding: 4px 0;
+  }
+  .nav-menu > li.open .nav-sub { display: block; }
+  .nav-sub a { padding-left: calc(var(--gutter) + 18px); }
+  .nav-phones { display: flex; flex-direction: column; gap: 2px; padding: 16px var(--gutter) 6px; }
+  .nav-menu > .nav-phones > a { display: flex; align-items: center; justify-content: flex-start; gap: 10px; padding: 8px 0; font-weight: 700; color: var(--ink); }
+  .nav-phones svg { width: 16px; height: 16px; color: var(--orange); }
+  /* Side margins mean it cannot also be 100% of the container -- that sum is
+     what pushed the button off the right edge of the screen. */
+  .nav-menu > li > a.nav-cta-mobile { display: flex; justify-content: center; width: auto; margin: 16px var(--gutter) 4px; }
+  .nav-menu > li:last-child { border-top: 0; }
+
+  .reviews, .card-grid { grid-template-columns: repeat(2, 1fr); }
+  /* An odd count leaves a dead cell in the last row at two columns —
+     let the orphan span the full width instead of showing a grey gap. */
+  .reviews > :last-child:nth-child(odd) { grid-column: span 2; }
+  .stats, .specs { grid-template-columns: repeat(2, 1fr); }
+  .office-grid { grid-template-columns: 1fr; }
+  .office, .office:first-child { padding-left: 0; padding-right: 0; }
+  .scroller-track { --rail-per-view: 2; }
+  .stat:nth-child(odd), .specs div:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .stat:nth-child(even), .specs div:nth-child(even) { padding-left: 26px; border-left: 1px solid var(--line); }
+  .hero-strip ul { grid-template-columns: repeat(2, 1fr); }
+  .hero-strip li:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .hero-scroll { display: none; }
+}
+
+@media (max-width: 860px) {
+  .split, .careers-inner,
+  .careers-band--flip .careers-inner { grid-template-columns: 1fr; gap: 34px; }
+  /* .band is one full-bleed slab — its photo and its dark copy panel meet edge
+     to edge by design. It used to share the line above, and the 34px that
+     rightly separates a .split's image from its copy opened a white stripe
+     straight through the middle of every stacked locations band. */
+  .band { grid-template-columns: 1fr; gap: 0; }
+  .split-flip .split-media, .band-flip .band-media,
+  .careers-band--flip .careers-media { order: 0; }
+  .band-media { min-height: 320px; }
+  /* Stacked, a fixed 320px turned every landscape photo into a letterbox strip
+     (697x320 at 768px -- 2.18:1 from a 3:2 frame). Follow the photograph instead. */
+  .split-media { min-height: 0; aspect-ratio: 3 / 2; }
+  .careers-band h2 { max-width: none; }
+  .plan { grid-template-columns: 1fr; }
+  .plan-step, .plan-step + .plan-step { padding: 30px 0 32px; border-left: 0; }
+  .plan--photos .plan-step::before, .plan--photos .plan-step + .plan-step::before { top: 30px; left: 0; }
+  .feature { min-height: 0; padding: 90px 0; }
+  .feature-card { margin-left: 0; max-width: none; }
+  /* Every hero fills the phone's screen exactly: the home hero sits under the
+     overlay nav, so it is the full viewport; every other hero follows a sticky
+     in-flow nav, so it is the viewport minus the nav. (Was 92svh -- a strip of
+     the next section showed under every hero.) */
+  .hero { min-height: 100svh; }
+  .hero-inner { padding-top: calc(var(--nav-h) + 56px); }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .footer-brand, .footer-cor { grid-column: 1 / -1; }
+}
+
+@media (max-width: 620px) {
+  body { font-size: 16.5px; }
+  /* The trailing rule reads as a stray dash once the label wraps. */
+  .eyebrow::after { display: none; }
+  .split--compact .checks { grid-template-columns: 1fr; }
+  .post { grid-template-columns: 1fr; gap: 18px; }
+  .post-media { aspect-ratio: 16 / 9; }
+  .post > .link-more { justify-self: start; }
+  .reviews, .card-grid, .card-grid-2, .form-row, .specs, .stats { grid-template-columns: 1fr; }
+  /* Two-up: seventeen full-width portraits made a 9,000px column. */
+  .team-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 16px; }
+  .team-card h4 { margin-top: 12px; font-size: 1rem; }
+  .team-card span { font-size: .8rem; letter-spacing: .02em; }
+  .team-email { font-size: .8rem; }
+  /* Single column: the orphan rule from the two-column breakpoint is still
+     in scope here, and its span would force an implicit second column. */
+  .reviews > :last-child:nth-child(odd) { grid-column: auto; }
+  .gallery { grid-template-columns: repeat(2, 1fr); }
+  .scroller-track { --rail-per-view: 1; --rail-gap: 18px; }
+  .specs div + div, .stat + .stat { padding-left: 0; border-left: 0; }
+  .hero-strip ul { grid-template-columns: 1fr 1fr; }
+  .hero-strip li { padding-right: 14px; font-size: .72rem; }
+  .hero-strip li + li { padding-left: 14px; }
+  .hero-strip b { font-size: 1.2rem; }
+  .hero-strip img { height: 27px; }
+  .hero-actions .btn { width: 100%; }
+  .footer-top { grid-template-columns: 1fr; }
+  .footer-cor { flex-direction: column; }
+}
+
+/* Post-fulfillment page (/thank-you/) — two numbered asks separated by a
+   hairline, matching the .plan / .svc-card counter treatment rather than
+   boxing each one. */
+.ask {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 0 22px;
+  padding: 44px 0;
+  border-top: 1px solid var(--line);
+}
+.ask:last-child { border-bottom: 1px solid var(--line); }
+.ask-num {
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: var(--orange);
+  padding-top: .5em;
+}
+.ask-body h2 { margin: 0 0 14px; }
+.ask-body > p { margin: 0; }
+
+.share { margin-top: 26px; }
+.share-name { display: grid; gap: 8px; margin-bottom: 14px; }
+.share-name label { font-size: .9rem; color: var(--muted); }
+.share-name input, .share textarea {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: .92rem;
+}
+.share textarea { background: var(--bg-alt); color: var(--muted); resize: vertical; line-height: 1.6; }
+.share-name input:focus, .share textarea:focus { outline: none; border-color: var(--orange); }
+.share-row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.share-row .btn { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; }
+.share-row .btn svg { width: 16px; height: 16px; }
+.share-row .btn[data-copied] { background: var(--ink); border-color: var(--ink); }
+
+.share-alt { display: flex; gap: 26px; flex-wrap: wrap; margin-top: 18px; font-size: .92rem; }
+.share-alt a { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); }
+.share-alt a:hover { color: var(--orange); }
+.share-alt svg { width: 16px; height: 16px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+@media (max-width: 720px) {
+  .ask { grid-template-columns: 1fr; gap: 0; padding: 34px 0; }
+  .ask-num { padding-top: 0; margin-bottom: 12px; }
+  .share-row .btn { width: 100%; }
+}
+
+/* ---------- Story chapters + video (our-story) ----------
+   The page is a chronology, so it reads as numbered chapters that alternate
+   sides. Each chapter keeps the photo and caption it used to have in the
+   gallery, rather than sending the reader to a grid at the end. */
+.chapters { counter-reset: chapter; }
+.chapter { counter-increment: chapter; padding: clamp(52px, 6vw, 88px) 0; border-top: 1px solid var(--line); }
+.chapter:first-child { border-top: 0; padding-top: 0; }
+.chapter .split { align-items: start; }
+.chapter .split-body h2 { margin-bottom: 20px; }
+.chapter .split-body h2::before {
+  content: '0' counter(chapter);
+  display: block;
+  margin-bottom: 14px;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: var(--orange);
+}
+.chapter .split-body p + p { margin-top: 14px; }
+
+.split-flip .chapter-media { order: 2; }
+.chapter-media { align-self: start; }
+.chapter-media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+.chapter-media figcaption { margin-top: 12px; font-size: .85rem; line-height: 1.5; color: var(--muted); }
+
+/* Click-to-play facade: nothing is requested from YouTube until the visitor
+   asks for it, which keeps the page free of third-party cookies and of ~1MB of
+   player script on load. js/script.js swaps in the iframe on click. */
+.video { position: relative; margin: 0; }
+.video-play {
+  display: block; position: relative; width: 100%; padding: 0;
+  border: 0; background: var(--ink); cursor: pointer; overflow: hidden;
+}
+/* height:auto is load-bearing: the <img height> attribute is a presentational
+   hint that pins the height and silently defeats aspect-ratio. */
+.video-play img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; transition: transform 1s var(--ease), opacity .4s var(--ease); }
+.video-play:hover img { transform: scale(1.03); opacity: .85; }
+.video-btn {
+  position: absolute; inset: 0; margin: auto;
+  width: 84px; height: 84px; display: grid; place-items: center;
+  background: var(--orange); color: var(--on-orange); border-radius: 50%;
+  transition: transform .3s var(--ease);
+}
+.video-play:hover .video-btn { transform: scale(1.08); }
+.video-btn svg { width: 30px; height: 30px; margin-left: 4px; }
+.video-cta {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 22px 26px; text-align: left;
+  color: #fff; font-weight: 700; font-size: 1.02rem;
+  background: linear-gradient(to top, rgba(0,0,0,.72), transparent);
+}
+.video-play:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+.video iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
+
+@media (max-width: 860px) {
+  .chapter .split, .chapter .split-flip { grid-template-columns: 1fr; }
+  .chapter .split-flip .split-media, .chapter .split-flip .chapter-media { order: 0; }
+  .video-btn { width: 64px; height: 64px; }
+  .video-btn svg { width: 24px; height: 24px; }
+  .video-cta { padding: 16px 18px; font-size: .95rem; }
+}
+.chapter-media figcaption b { display: block; color: var(--ink); font-size: .92rem; margin-bottom: 4px; }
+
+/* ---------- Archive photo grid (our-story) ----------
+   A gallery, not a card list: the photograph carries the row and the words sit
+   under it, quiet. Eight photos land as two clean rows of four, so no orphan is
+   left dangling in the last row. */
+.photo-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(18px, 2.2vw, 30px); }
+.photo-grid figure { margin: 0; }
+.photo-grid img {
+  display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  background: var(--bg-alt); transition: transform .8s var(--ease);
+}
+.photo-grid figure:hover img { transform: scale(1.04); }
+.photo-grid figure { overflow: hidden; }
+.photo-grid figcaption { margin-top: 12px; font-size: .84rem; line-height: 1.55; color: var(--muted); }
+.photo-grid figcaption b {
+  display: block; min-height: 2lh; margin-bottom: 3px;
+  color: var(--ink); font-size: .9rem; line-height: 1.3;
+}
+
+@media (max-width: 1024px) { .photo-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px)  { .photo-grid { grid-template-columns: 1fr; } .photo-grid figcaption b { min-height: 0; } }
+
+/* The staff-party clip is a vertical Short, so it gets a 9:16 frame instead of
+   being letterboxed into a 16:9 box with black bars down both sides. */
+.split--video { grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr); align-items: start; }
+/* width:100% matters: justify-self makes the figure shrink-to-fit, and until
+   the lazy poster has loaded it has no intrinsic width, so the column would
+   collapse to zero and then jump when the image arrives. */
+.video--portrait { width: 100%; max-width: 420px; justify-self: center; }
+.video--portrait .video-play img { aspect-ratio: 9 / 16; }
+.video--portrait iframe { aspect-ratio: 9 / 16; }
+.video--portrait .video-btn { width: 68px; height: 68px; }
+.video--portrait .video-btn svg { width: 24px; height: 24px; }
+
+/* Job listings are a list, not a grid of equal-height cards. Descriptions run
+   from one line to six, and no stretched grid survives that without leaving
+   holes; a row sizes to its own content and the Apply button always lands in
+   the same column. */
+.jobs { border-top: 2px solid var(--ink); }
+.job {
+  display: grid;
+  grid-template-columns: minmax(0, .82fr) minmax(0, 1.5fr) auto;
+  gap: clamp(20px, 3vw, 52px);
+  align-items: start;
+  padding: clamp(28px, 3.2vw, 42px) 0;
+  border-bottom: 1px solid var(--line);
+}
+.job-head h3 { margin: 0; font-size: clamp(1.12rem, 1.5vw, 1.32rem); }
+.job-head .card-meta { margin-top: 10px; }
+.job-body p { margin: 0; font-size: .97rem; }
+.job-posted { margin-top: 14px !important; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.job-apply { align-self: start; white-space: nowrap; }
+
+@media (max-width: 900px) {
+  .split--video { grid-template-columns: 1fr; }
+  /* Centred on phones: justify-self covers the grid splits, margin-inline the
+     block-flow prose of the blog posts, where justify-self does nothing. */
+  .video--portrait { max-width: 340px; justify-self: center; margin-inline: auto; }
+  .job { grid-template-columns: 1fr; gap: 16px; }
+  .job-apply { justify-self: start; }
+}
+@media (max-width: 760px) {
+  .band--hero { grid-template-columns: 1fr; }
+  .band--hero .band-media { min-height: 300px; }
+}
+
+/* The application form leads, so it takes the wider column: the page exists to
+   receive a resume, not to be read. */
+.split--apply { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); align-items: start; }
+@media (max-width: 900px) { .split--apply { grid-template-columns: 1fr; } }
+
+/* Careers and the language toggle serve people who are not buying, so a hairline
+   sets them off from the run of buying steps. The nav reads as two groups rather
+   than one long queue of eight equal things. */
+@media (min-width: 1025px) {
+  .nav-menu > .nav-aside { margin-left: clamp(14px, 2vw, 30px); padding-left: clamp(14px, 2vw, 30px); border-left: 1px solid var(--line); }
+  .nav--overlay .nav-menu > .nav-aside { border-left-color: rgba(255,255,255,.24); }
+  .nav.is-solid .nav-menu > .nav-aside { border-left-color: var(--line); }
+}
+
+/* ---------- Form plumbing ---------- */
+/* The honeypot has to be reachable by a bot parsing the DOM but invisible and
+   unfocusable for a person — display:none would let smarter bots skip it. */
+.form-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-hint { display: block; margin-top: 7px; font-size: .82rem; color: var(--muted); }
+.form-privacy { margin-top: 16px; font-size: .82rem; color: var(--muted); }
+.form-status { margin-top: 16px; font-size: .95rem; font-weight: 500; min-height: 1.4em; }
+.form-status[data-state="busy"]  { color: var(--muted); }
+.form-status[data-state="ok"]    { color: var(--ink); border-left: 3px solid var(--orange); padding-left: 14px; }
+.form-status[data-state="error"] { color: #b3261e; }
+.form button[type="submit"]:disabled { opacity: .6; cursor: progress; }
+
+/* ===================================================
+   Paid-traffic landing pages (chrome: landing)
+   ===================================================
+   A page reached from an ad has one job, so it is stripped to it: no menu, no
+   footer link grid, no logo-to-home link. What is left is the phone number, the
+   booking form and the privacy policy the ad platforms require. */
+
+.lp-header { border-bottom: 1px solid var(--hair); background: var(--surface); }
+.lp-header-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 14px var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.lp-logo { width: 170px; height: auto; }
+.lp-header-call { padding: 12px 22px; font-size: .95rem; }
+.lp-header-call svg { width: 17px; height: 17px; }
+
+/* Hero. The photo sits in its own column rather than full-bleed behind the
+   copy: on a phone the column order puts the call button above the fold, which
+   a background image would have pushed off it. */
+.lp-hero { padding: clamp(46px, 6vw, 84px) 0 clamp(40px, 5vw, 72px); }
+.lp-hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  gap: clamp(30px, 4vw, 64px);
+  align-items: center;
+}
+.lp-hero-copy .lead { margin-top: 20px; max-width: 46ch; }
+.lp-hero-media img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4 / 3; }
+/* Coverage: the Island office from the air, so "we are local" is something you see. */
+.lp-office { margin-top: 30px; aspect-ratio: 16 / 9; overflow: hidden; background: var(--bg-alt); }
+.lp-office img { width: 100%; height: 100%; object-fit: cover; }
+
+.lp-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+/* The number is the offer, so it is set larger than the button label around it. */
+.lp-action-call { font-size: 1.22rem; letter-spacing: -.01em; }
+.lp-action-call svg { width: 21px; height: 21px; }
+
+.lp-trust {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-size: .92rem;
+}
+.lp-trust li { display: flex; align-items: center; gap: 9px; }
+.lp-trust svg { width: 17px; height: 17px; color: var(--orange); flex: none; }
+
+/* Two plain columns, hairline between. Boxing these as cards would make the
+   page look like a brochure; they are a list of reasons to call.
+   The tracks are 1fr each and the inset is split evenly across the rule rather
+   than paid by the second column alone — a column-gap plus a one-sided padding
+   made the right column ~50px narrower, which the two photos then reported
+   faithfully at 581px and 529px. */
+.lp-cols { display: grid; grid-template-columns: repeat(2, 1fr); }
+.lp-col:first-child { padding-right: clamp(17px, 2vw, 35px); }
+.lp-col:last-child { border-left: 1px solid var(--line); padding-left: clamp(17px, 2vw, 35px); }
+.lp-col h3 { display: flex; align-items: center; gap: 12px; }
+.lp-col h3 svg { width: 22px; height: 22px; color: var(--orange); flex: none; }
+/* The box owns the ratio, not the photograph — a 3:2 and a 4:3 source in the
+   same row would otherwise sit at different heights and pull the two
+   checklists out of line. */
+.lp-col-media { aspect-ratio: 3 / 2; overflow: hidden; margin-bottom: 26px; background: var(--bg-alt); }
+.lp-col-media img { width: 100%; height: 100%; object-fit: cover; }
+
+/* The number and hours stated immediately above the frame. The embedded form
+   prints the Moncton number in its own header and that is account-level in
+   ServiceM8 — this is what stops it being the only number on the page. */
+.lp-phoneline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px 22px;
+  margin-bottom: 26px;
+  text-align: center;
+}
+.lp-phoneline a { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.3rem; color: var(--ink); }
+.lp-phoneline a:hover { color: var(--orange); }
+.lp-phoneline svg { width: 20px; height: 20px; color: var(--orange); }
+.lp-phoneline span { display: inline-flex; align-items: center; gap: 8px; font-size: .92rem; color: var(--body); }
+.lp-phoneline span svg { width: 16px; height: 16px; }
+
+/* ServiceM8 embed. The frame cannot report its height — the booking app sends no
+   postMessage — so these are measured values with headroom rather than anything
+   that adapts. Content height of the General service call form, measured against
+   the live booking app: 1362px at 806 wide, 1360px at 646, 1406px at 480, 1515px
+   at 321 (it stops reflowing below ~480 and just stacks). If LuMar adds a
+   question to a form, re-measure: a frame set too short means a scrollbar inside
+   a scrollbar, which is the one thing worse than a tall embed.
+
+   .sm8-clip crops 110px off the top of the frame, which is ServiceM8's own
+   header: the LuMar logo a second time and, whatever province the page is for,
+   the Moncton phone number. Neither can be changed from here — they are
+   account-level settings inside a third-party document — and a wrong number
+   sitting under the right one is not something a paid-traffic page can carry.
+   Their header ends at 109/102/102/95px across those four widths and their
+   "Back" link never starts before 126px, so 110px is clear at both ends.
+   Clip heights are the frame height minus the crop.
+
+   Size the frame to that natural height and no taller. Their layout is
+   min-height:100vh, so an over-tall frame does not simply add blank space at the
+   bottom — it stretches the page and carries the Send Enquiry button down with
+   it, stranding the submit a screenful below the last field. Verified: at a
+   1600px frame the button sits at 1525; at 1362 it sits at 1287, directly under
+   the form. Three bands keep every real viewport close to its natural height. */
+.sm8 { border: 1px solid var(--line); background: #fff; }
+.sm8-clip { overflow: hidden; height: 1260px; }
+.sm8-frame { display: block; width: 100%; height: 1370px; margin-top: -110px; border: 0; }
+
+/* The frame is the container width less gutters and border, so viewport 700 is
+   frame 646 and viewport 534 is frame 480 — where their own layout reflows. */
+@media (max-width: 699px) {
+  .sm8-clip { height: 1305px; }
+  .sm8-frame { height: 1415px; }
+}
+@media (max-width: 533px) {
+  .sm8-clip { height: 1465px; }
+  .sm8-frame { height: 1575px; }
+}
+/* Per-service heights. The base rules above are General service call, measured
+   for /pei-service-call/. Electrical Service Appointment -- the service every
+   "Book a Service Call" button on the site lands on, and the one embedded on the
+   home page -- asks more questions and is 200-390px taller at the same widths.
+   Measured natural content height, frame width -> height:
+     806 -> 1564    480 -> 1628    321 -> 1904
+   Reusing the numbers above would have clipped the form; sizing it taller than
+   these strands the submit button, because their layout is min-height: 100vh. */
+.sm8--appointment .sm8-clip  { height: 1465px; }
+.sm8--appointment .sm8-frame { height: 1575px; }
+
+@media (max-width: 699px) {
+  .sm8--appointment .sm8-clip  { height: 1550px; }
+  .sm8--appointment .sm8-frame { height: 1660px; }
+}
+
+@media (max-width: 533px) {
+  .sm8--appointment .sm8-clip  { height: 1830px; }
+  .sm8--appointment .sm8-frame { height: 1940px; }
+}
+/* Re-measured 2026-10-29: Appointment had grown to 1565 / 1649 / 1931 (a "How did
+   you hear about us?" question), 9-16px past its old phone heights. EV charger and
+   Electrical Service upgrade inquiry had never been measured and were riding the
+   General service call numbers, so their last 600-900px -- photo uploads and the
+   Send Enquiry button -- were cut off on /ev-charger-installation/ and
+   /electrical-panel-upgrade/. Natural height at frame width 806 / 480 / 321:
+     ev_charger       2104 / 2176 / 2509
+     service_upgrade  1965 / 2061 / 2403 */
+.sm8--ev_charger .sm8-clip  { height: 2005px; }
+.sm8--ev_charger .sm8-frame { height: 2115px; }
+.sm8--service_upgrade .sm8-clip  { height: 1865px; }
+.sm8--service_upgrade .sm8-frame { height: 1975px; }
+
+@media (max-width: 699px) {
+  .sm8--ev_charger .sm8-clip  { height: 2075px; }
+  .sm8--ev_charger .sm8-frame { height: 2185px; }
+  .sm8--service_upgrade .sm8-clip  { height: 1960px; }
+  .sm8--service_upgrade .sm8-frame { height: 2070px; }
+}
+
+@media (max-width: 533px) {
+  .sm8--ev_charger .sm8-clip  { height: 2410px; }
+  .sm8--ev_charger .sm8-frame { height: 2520px; }
+  .sm8--service_upgrade .sm8-clip  { height: 2305px; }
+  .sm8--service_upgrade .sm8-frame { height: 2415px; }
+}
+
+.sm8-fallback {
+  border-top: 1px solid var(--line);
+  padding: 14px 18px;
+  font-size: .88rem;
+  color: var(--muted);
+  text-align: center;
+}
+.sm8-fallback a { color: var(--orange); font-weight: 700; }
+
+.lp-close { margin-top: 34px; }
+
+.lp-footer { background: var(--dark-2); color: #9aa1a9; padding: 40px 0; font-size: .9rem; }
+.lp-footer-inner { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+.lp-footer-line { display: flex; flex-wrap: wrap; gap: 8px 26px; align-items: baseline; }
+.lp-footer-line a { color: #fff; font-weight: 700; }
+.lp-footer-line a:hover { color: var(--orange); }
+.lp-footer-legal { margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.12); font-size: .82rem; }
+.lp-footer-legal a { font-weight: 400; }
+
+/* Sticky tap-to-call, phones only. Half of paid traffic to a service-call page
+   arrives on a phone with a problem in front of them; the number should never
+   be more than a thumb away. */
+.lp-callbar { display: none; }
+
+/* The booking form is the second block on the page, so the hero hands straight
+   over to it rather than opening a new movement. */
+.lp-hero + .section { padding-top: clamp(38px, 4vw, 62px); }
+
+@media (max-width: 1000px) {
+  .lp-hero-inner { grid-template-columns: 1fr; }
+  /* Once the hero stacks, the photo costs ~290px of scrolling in front of the
+     form and buys nothing a visitor who just clicked an ad for an electrician
+     needs. It earns its place in the desktop column, where it is free. */
+  .lp-hero-media { display: none; }
+  /* PEI only (2026-11-15): GA4 showed ad visitors leaving the PEI page in 16s
+     against 37s on Moncton, with no face on the first screen. A short 16:9 strip
+     of the real Island crew goes above the copy instead; the call button stays
+     above the fold on a 375x812 phone. Moncton keeps the original rule. */
+  .lp-hero--photo { padding-top: 22px; }
+  .lp-hero--photo .lp-hero-media { display: block; order: -1; }
+  .lp-hero--photo .lp-hero-media img { aspect-ratio: 16 / 9; object-position: 50% 30%; }
+  .lp-cols { grid-template-columns: 1fr; }
+  .lp-col:first-child { padding-right: 0; }
+  .lp-col:last-child {
+    border-left: 0; padding-left: 0;
+    border-top: 1px solid var(--line); padding-top: clamp(30px, 4vw, 44px); margin-top: clamp(30px, 4vw, 44px);
+  }
+}
+
+@media (max-width: 700px) {
+  .lp-header-call { padding: 11px 16px; font-size: .88rem; }
+  .lp-logo { width: 132px; }
+  .lp-actions .btn { width: 100%; }
+  /* Clear the sticky bar so it never covers the last line of the footer. */
+  body.is-landing { padding-bottom: 64px; }
+  .lp-callbar {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 950;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 17px 16px;
+    background: var(--orange);
+    color: var(--on-orange);
+    font-weight: 700;
+    box-shadow: 0 -6px 24px rgba(0,0,0,.16);
+  }
+  .lp-callbar svg { width: 18px; height: 18px; }
+}
+
+/* ===================================================
+   HOME HERO, MINIMAL — one photograph, a short headline, one button, both
+   offices' numbers as text. No eyebrow, no scroll cue, three credentials.
+   =================================================== */
+.hero--minimal .hero-inner { padding-bottom: 56px; }
+.hero--minimal h1 { max-width: 15ch; }
+.hero--minimal .hero-sub { margin-top: 22px; max-width: 44ch; }
+.hero--minimal .hero-actions { margin-top: 32px; }
+.hero-call {
+  display: flex; flex-wrap: wrap; gap: 6px 26px;
+  margin-top: 22px;
+  color: rgba(255,255,255,.62);
+  font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
+}
+.hero-call a {
+  color: #fff; text-decoration: none; letter-spacing: .02em; font-size: 1rem; text-transform: none;
+  margin-left: 6px; border-bottom: 1px solid rgba(255,255,255,.35); padding-bottom: 2px;
+}
+.hero-call a:hover, .hero-call a:focus-visible { border-bottom-color: var(--orange); }
+.hero--minimal .hero-strip ul { grid-template-columns: repeat(4, 1fr); }
+.hero--minimal .hero-strip li:nth-child(n) { padding-left: 26px; border-left: 1px solid rgba(255,255,255,.16); }
+.hero--minimal .hero-strip li:first-child { padding-left: 0; border-left: 0; }
+@media (max-width: 620px) {
+  .hero--minimal .hero-strip li:nth-child(n) { padding-left: 12px; padding-right: 8px; font-size: .64rem; }
+  .hero--minimal .hero-strip li:first-child { padding-left: 0; }
+  .hero--minimal .hero-strip b { font-size: 1.1rem; }
+  .hero--minimal .hero-strip img { height: 26px; }
+}
+
+/* Strip labels: full wording on desktop, one word on a phone so the three
+   credentials sit on one row instead of wrapping to three lines each. */
+.hero-strip .lbl-short { display: none; }
+@media (max-width: 620px) {
+  .hero--minimal .hero-strip li:nth-child(n) { padding-top: 14px; padding-bottom: 16px; }
+  .hero-strip .lbl-long { display: none; }
+  .hero-strip .lbl-short { display: inline; }
+  /* Four credentials do not fit one row at 375px ("ELECTRICIANS" alone is
+     ~96px), so the strip folds to two by two. */
+  .hero--minimal .hero-strip ul { grid-template-columns: 1fr 1fr; }
+  .hero--minimal .hero-strip li:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .hero--minimal .hero-strip li:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,.16); }
+}
+
+/* LuMar's 15-year badge (2011-2026). Square artwork with fine lettering, so it
+   runs larger than the numerals it sits beside and pulls up by the difference
+   to keep the labels on one baseline. The ink version flips for dark mode;
+   the white one only ever sits on the hero photo or the dark footer. */
+.hero-strip img.strip-15 { height: 46px; width: auto; margin: -12px 0 3px; }
+.badge-15 { display: block; width: auto; }
+.guide-facts dt .badge-15 { height: 54px; margin: -8px 0 -6px; }
+.stat b .badge-15 { height: clamp(3.2rem, 6vw, 4.8rem); margin: -.5rem 0 -.3rem; }
+:root[data-theme="dark"] .badge-15 { filter: invert(1); }
+@media (max-width: 620px) {
+  .hero-strip img.strip-15 { height: 36px; margin-top: -9px; }
+}
+/* The COR seal stands in for the word wherever COR is shown as a credential
+   rather than said in a sentence. lumar-cor.png (white) is for the hero photo
+   and the dark footer; the ink version is for light grounds and flips for dark
+   mode. On the orange band it stays black in both themes, like --on-orange. */
+.seal-cor { display: block; width: auto; }
+.guide-facts dt .seal-cor { height: 44px; margin: -5px 0 -3px; }
+:root[data-theme="dark"] .guide-facts .seal-cor { filter: invert(1); }
+.perks .perk-seal { display: flex; align-items: center; gap: 9px; padding-block: 5px; }
+.perks .perk-seal .seal-cor { height: 24px; }
+
+/* Second half of the section above it -- same background (set by the
+   generator), no gap between the two. */
+.section--continue { padding-top: 0; }
+
+/* ===================================================
+   StoryBrand components -- see design/BRANDSCRIPT.md
+   Generated from _build/sb7.py by {{problem:key}}, {{guide}}, {{stakes:key}},
+   {{faq:key}}, {{related:key}} and {{proof:key}}. Same tokens as everything
+   else; no new colours.
+   =================================================== */
+
+/* Problem: the reader's situation said back to them, before any word about
+   LuMar. Typographic on purpose -- the external problem is a run of short
+   lines that get quieter as they go, the internal one is the paragraph, the
+   philosophical one is the line with the rule. */
+.problem { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: clamp(32px, 5vw, 88px); align-items: end; }
+.problem-lines { font-size: clamp(1.9rem, 3.6vw, 3.15rem); line-height: 1.12; letter-spacing: -.026em; }
+.problem-lines span { display: block; }
+.problem-lines span + span { color: var(--muted); }
+.problem-lines span:nth-child(n+3) { color: #9aa1a8; }
+.section-alt .problem-lines span:nth-child(n+3) { color: #8b9299; }
+.problem-body p { font-size: clamp(1.05rem, 1.25vw, 1.15rem); color: var(--ink); }
+.problem-philo {
+  margin-top: 22px !important; padding-left: 18px;
+  border-left: 4px solid var(--orange);
+  font-weight: 700; color: var(--ink);
+}
+
+/* Guide: one empathy sentence, then the authority row. LuMar earns the right
+   to be listened to here, which is why it comes after the problem and not in
+   the hero. */
+.guide { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: clamp(32px, 5vw, 88px); align-items: start; }
+.guide-say h2 { font-size: clamp(1.7rem, 2.8vw, 2.5rem); }
+.guide-say p { margin-top: 20px; max-width: 48ch; }
+.guide-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 2px solid var(--ink); }
+.guide-facts div { padding: 24px 18px 26px 0; border-bottom: 1px solid var(--line); }
+.guide-facts div:not(:nth-child(3n+1)) { padding-left: 18px; border-left: 1px solid var(--line); }
+.guide-facts dt { font-size: clamp(1.6rem, 2.6vw, 2.3rem); font-weight: 900; color: var(--ink); line-height: 1; letter-spacing: -.03em; }
+.guide-facts dt img { height: 38px; width: auto; }
+.guide-facts dd { margin-top: 10px; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 700; line-height: 1.4; }
+.section-dark .guide-facts { border-top-color: #fff; }
+.section-dark .guide-facts div { border-color: rgba(255,255,255,.14); }
+.section-dark .guide-facts dt { color: #fff; }
+.section-dark .guide-facts dd { color: #9aa1a8; }
+
+/* Stakes and success: the same section, two columns, so the reader sees the
+   cost of waiting and the picture of done side by side. */
+.stakes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid rgba(255,255,255,.16); }
+.stakes-col { padding: 34px clamp(20px, 3vw, 48px) 8px 0; }
+.stakes-col + .stakes-col { padding-left: clamp(20px, 3vw, 48px); border-left: 1px solid rgba(255,255,255,.16); }
+.stakes-col h3 { font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 20px; }
+.stakes-risk h3 { color: #9aa1a8 !important; }
+.stakes-win h3 { color: var(--orange) !important; }
+.stakes-col ul { list-style: none; display: grid; gap: 16px; }
+.stakes-col li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 12px; font-size: 1.05rem; line-height: 1.5; }
+.stakes-risk li { color: #a9b0b8; }
+.stakes-risk li::before { content: ''; width: 14px; height: 2px; margin-top: .75em; background: #6d747c; }
+.stakes-win li { color: #fff; }
+.stakes-win li svg { width: 20px; height: 20px; color: var(--orange); margin-top: 3px; }
+.stakes-foot { margin-top: clamp(34px, 4vw, 52px); display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
+.stakes-foot .phone { color: #fff; font-weight: 700; border-bottom: 2px solid var(--orange); }
+
+/* FAQ: native <details>, so it works with no script and is announced
+   correctly by screen readers. Heading left, questions right. */
+.faq-wrap { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(32px, 5vw, 88px); align-items: start; }
+.faq-head { position: sticky; top: calc(var(--nav-h) + 24px); }
+.faq-head p { margin-top: 18px; max-width: 40ch; }
+.faq { border-top: 2px solid var(--ink); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: minmax(0, 1fr) 28px; gap: 18px; align-items: start;
+  padding: 24px 0;
+  font-weight: 700; color: var(--ink); font-size: clamp(1.02rem, 1.25vw, 1.15rem); line-height: 1.4;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: '+'; justify-self: end;
+  width: 28px; height: 28px; display: grid; place-items: center;
+  border: 1.5px solid var(--line); font-weight: 400; font-size: 1.2rem; line-height: 1;
+  transition: transform .2s var(--ease), background .2s var(--ease);
+}
+.faq details[open] summary::after { content: '\2212'; background: var(--orange); border-color: var(--orange); color: var(--on-orange); }
+.faq summary:hover { color: var(--orange-ink); }
+.faq-a { padding: 0 46px 26px 0; }
+.faq-a p + p { margin-top: 12px; }
+
+/* Related services: the next page this reader is likely to want, as a row of
+   links rather than another grid of cards. */
+.related-head { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; margin-bottom: 24px; }
+.related-head h2 { font-size: clamp(1.4rem, 2.2vw, 1.9rem); }
+.related { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 2px solid var(--ink); }
+.related li { border-bottom: 1px solid var(--line); }
+.related li:not(:nth-child(3n+1)) { border-left: 1px solid var(--line); }
+.related a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 14px; padding: 22px 22px 24px 0; height: 100%; }
+.related li:not(:nth-child(3n+1)) a { padding-left: 22px; }
+.related b { color: var(--ink); font-size: 1.05rem; }
+.related span { grid-column: 1; font-size: .92rem; color: var(--body); }
+.related svg { grid-column: 2; grid-row: 1 / span 2; align-self: center; width: 18px; height: 18px; color: var(--orange-ink); transition: transform .2s var(--ease); }
+.related a:hover b { color: var(--orange-ink); }
+.related a:hover svg { transform: translateX(4px); }
+
+/* Proof: one review and one piece of work that match the page. */
+.proof { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 64px); align-items: stretch; }
+.proof-quote { display: flex; flex-direction: column; justify-content: center; border-top: 2px solid var(--ink); padding-top: 28px; }
+.proof-quote blockquote { font-size: clamp(1.25rem, 2vw, 1.7rem); line-height: 1.35; color: var(--ink); letter-spacing: -.012em; }
+.proof-quote .stars { margin-bottom: 18px; }
+.proof-quote figcaption { margin-top: 26px; font-size: .86rem; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.proof-quote figcaption b { color: var(--ink); letter-spacing: 0; text-transform: none; font-size: 1rem; margin-right: 8px; }
+.proof-work { display: grid; grid-template-rows: auto 1fr; }
+.proof-work .card-media { aspect-ratio: 16 / 10; }
+.proof-work .card-body { margin-top: 18px; }
+
+/* Checklist page (transitional CTA): printable. */
+.safety-list { counter-reset: safety; list-style: none; border-top: 2px solid var(--ink); }
+.safety-list li {
+  counter-increment: safety;
+  display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 4px 18px;
+  padding: 24px 0 26px; border-bottom: 1px solid var(--line);
+}
+.safety-list li::before { content: counter(safety, decimal-leading-zero); grid-row: 1 / span 2; font-weight: 700; letter-spacing: .12em; font-size: .82rem; color: var(--orange-ink); padding-top: .3em; }
+.safety-list b { color: var(--ink); font-size: 1.08rem; }
+.safety-list span { font-size: .98rem; }
+.safety-group + .safety-group { margin-top: clamp(40px, 5vw, 64px); }
+.safety-group h2 { font-size: clamp(1.35rem, 2vw, 1.75rem); margin-bottom: 18px; }
+.print-btn svg { width: 18px; height: 18px; }
+@media print {
+  .nav, .footer, .page-hero > img, .no-print, .careers-band { display: none !important; }
+  .page-hero { display: block; min-height: 0; border: 0; }
+  .page-hero-inner { padding: 0 0 18px; }
+  .section { padding: 18px 0; }
+  .safety-list li { break-inside: avoid; padding: 10px 0; }
+  body { font-size: 12pt; }
+}
+
+/* Transitional CTA strip: for the reader who is not ready to book. */
+.trans-cta { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px 40px; align-items: center; padding: 30px 0; border-block: 1px solid var(--line); }
+.trans-cta h2 { font-size: clamp(1.25rem, 1.9vw, 1.6rem); }
+.trans-cta p { margin-top: 8px; }
+
+@media (max-width: 1024px) {
+  .problem, .guide, .faq-wrap, .proof { grid-template-columns: 1fr; }
+  .faq-head { position: static; }
+  .related { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .related li:not(:nth-child(3n+1)) { border-left: 0; }
+  .related li:nth-child(even) { border-left: 1px solid var(--line); }
+  .related li:not(:nth-child(3n+1)) a { padding-left: 0; }
+  .related li:nth-child(even) a { padding-left: 22px; }
+}
+@media (max-width: 760px) {
+  .guide-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .guide-facts div:not(:nth-child(3n+1)) { padding-left: 0; border-left: 0; }
+  .guide-facts div:nth-child(even) { padding-left: 16px; border-left: 1px solid var(--line); }
+  .section-dark .guide-facts div:nth-child(even) { border-color: rgba(255,255,255,.14); }
+  .stakes { grid-template-columns: 1fr; }
+  .stakes-col + .stakes-col { padding-left: 0; border-left: 0; border-top: 1px solid rgba(255,255,255,.16); }
+  .related { grid-template-columns: 1fr; }
+  .related li:nth-child(even) { border-left: 0; }
+  .related li:nth-child(even) a { padding-left: 0; }
+  .trans-cta { grid-template-columns: 1fr; }
+  .faq-a { padding-right: 0; }
+}
+
+
+/* ===================================================
+   Dark theme
+   ===================================================
+   Set on <html data-theme> by the inline script in <head> before first paint:
+   the visitor's own choice if they have made one (the toggle in the nav,
+   remembered in localStorage), otherwise their system setting. The brand
+   orange does not change; what changes is the ground it sits on, which is the
+   point -- LuMar's black-and-orange reads as itself on a dark page in a way it
+   never did on white. Type on orange stays black in both themes (--on-orange):
+   white on this orange is 3.3:1. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0f1114;
+  --bg-alt: #171a1e;
+  --surface: #1a1d22;
+  --ink: #f3f4f6;
+  --body: #b9bfc6;
+  --muted: #949ba3;
+  --line: #2b3036;
+  --hair: #1f2328;
+  --dark: #07080a;
+  --dark-2: #08090b;
+  --orange-ink: #ff7a45;
+  --orange-soft: rgba(244, 91, 30, .16);
+}
+:root[data-theme="dark"] .nav-logo-dark { opacity: 0; }
+:root[data-theme="dark"] .nav-logo-light { opacity: 1; }
+:root[data-theme="dark"] .lp-logo { filter: invert(1) hue-rotate(180deg); }
+:root[data-theme="dark"] .nav-sub { box-shadow: 0 24px 54px rgba(0,0,0,.5); }
+:root[data-theme="dark"] .section-dark,
+:root[data-theme="dark"] .band-body,
+:root[data-theme="dark"] .cta-center { border-block: 1px solid var(--line); }
+:root[data-theme="dark"] .section-dark + .section-dark { border-top: 0; }
+:root[data-theme="dark"] .card-body { border-top-color: var(--ink); }
+:root[data-theme="dark"] .crumbs li + li::before { color: #4a5057; }
+:root[data-theme="dark"] .problem-lines span:nth-child(n+3) { color: #6f767e; }
+:root[data-theme="dark"] .careers-band--quiet .perks li { color: var(--body); }
+/* The partner wordmark and the booking frame are drawn for white. */
+:root[data-theme="dark"] .logo-panel { background: #fff; border-color: #fff; }
+:root[data-theme="dark"] .logo-panel figcaption { color: #6b7279; }
+:root[data-theme="dark"] .sm8 { border-color: var(--line); }
+
+/* Theme toggle: an icon button beside the language switch. */
+.theme-toggle {
+  display: inline-grid; place-items: center;
+  width: 38px; height: 38px; padding: 0;
+  background: transparent; border: 1px solid var(--line); color: var(--ink);
+  cursor: pointer; transition: border-color .2s var(--ease), color .2s var(--ease);
+}
+.theme-toggle:hover { border-color: var(--orange); color: var(--orange-ink); }
+.theme-toggle svg { width: 17px; height: 17px; }
+.theme-toggle .ic-sun { display: none; }
+:root[data-theme="dark"] .theme-toggle .ic-sun { display: block; }
+:root[data-theme="dark"] .theme-toggle .ic-moon { display: none; }
+.nav--overlay:not(.is-solid) .theme-toggle { color: #fff; border-color: rgba(255,255,255,.35); }
+.nav-menu > .nav-theme { display: flex; align-items: center; margin-left: 4px; }
+@media (max-width: 1024px) {
+  .nav-menu > .nav-theme { margin: 0; padding: 12px var(--gutter); }
+  .nav--overlay:not(.is-solid) .theme-toggle { color: var(--ink); border-color: var(--line); }
+}
+
+/* Home and hub: two service lanes, home and business, as linked rows. The
+   whole row is the link -- a list of services, not a grid of buttons. */
+.lanes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(28px, 4vw, 72px); }
+.lane-title { font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+.lane .svc-card { grid-template-columns: 44px minmax(0, 1fr) 24px; padding: 20px 0 22px; color: inherit; }
+.lane .svc-card h4 { grid-column: 2; }
+.lane .svc-card p { grid-column: 2; font-size: .94rem; }
+.lane .svc-go { grid-column: 3; grid-row: 1 / span 2; align-self: center; color: var(--orange-ink); transition: transform .2s var(--ease); }
+.lane .svc-go svg { width: 18px; height: 18px; }
+.lane .svc-card:hover .svc-go { transform: translateX(4px); }
+@media (max-width: 900px) {
+  .lanes { grid-template-columns: 1fr; }
+  .lane .svc-card { grid-template-columns: 40px minmax(0, 1fr) 20px; }
+  .lane .svc-card p { grid-column: 2; }
+}
+
+/* Footer link grid: every service and area page, one hop from anywhere. */
+.footer-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(24px, 3vw, 48px); margin-top: clamp(44px, 5vw, 64px); padding-top: clamp(36px, 4vw, 52px); border-top: 1px solid rgba(255,255,255,.1); }
+.footer-list { list-style: none; display: grid; gap: 9px; font-size: .92rem; }
+.footer-list a { color: #b9bfc6; }
+.footer-list a:hover { color: var(--orange); }
+@media (max-width: 900px) { .footer-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* On phones the theme switch sits in the bar beside the menu button, not at
+   the foot of the open menu where nobody finds it. */
+.theme-toggle--bar { display: none; }
+@media (max-width: 1024px) {
+  .theme-toggle--bar { display: inline-grid; margin-left: auto; margin-right: 6px; }
+  .theme-toggle--bar + .nav-toggle { margin-left: 0; }
+  .nav-menu > .nav-theme { display: none; }
+  .nav--overlay:not(.is-solid) .theme-toggle--bar { color: #fff; border-color: rgba(255,255,255,.35); }
+}
+
+/* Grouped dropdowns (Services, Locations): columns with a label each, and the
+   "all" links along the foot. */
+.nav-sub--cols { display: grid; grid-template-columns: repeat(2, minmax(220px, 1fr)); gap: 4px 12px; min-width: 540px; padding: 14px; }
+.nav-col ul { list-style: none; }
+.nav-group { display: block; padding: 6px 14px 8px; font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.nav-sub-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 4px 6px; margin-top: 6px; padding-top: 8px; border-top: 1px solid var(--line); }
+.nav-sub-foot a { font-weight: 700; color: var(--orange-ink) !important; }
+@media (max-width: 1024px) {
+  .nav-sub--cols { display: none; grid-template-columns: 1fr; min-width: 0; padding: 4px 0; }
+  .nav-menu > li.open .nav-sub--cols { display: grid; }
+  .nav-group { padding: 12px calc(var(--gutter) + 18px) 4px; }
+  .nav-sub-foot { padding-left: calc(var(--gutter) + 4px); }
+}
+
+/* The Moncton portrait: keep the person, and downtown behind him, in every crop. */
+img[src$="lumar-moncton-downtown-balcony.webp"] { object-position: 66% 38%; }
+
+/* /locations/: every community, linked where it has a page. */
+.town-list { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 22px; border-top: 2px solid var(--ink); padding-top: 20px; font-size: 1.05rem; color: var(--ink); }
+
+/* Home: one photograph at the head of each service lane. */
+.lane-media { display: block; aspect-ratio: 16 / 9; overflow: hidden; margin-bottom: 18px; background: var(--bg-alt); }
+.lane-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+.lane-media:hover img { transform: scale(1.04); }
+
+/* Home: "On the job" -- six real jobsite photos, the first one large. */
+.mosaic { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: clamp(150px, 15vw, 230px); gap: 12px; }
+.mosaic-item { position: relative; overflow: hidden; background: var(--dark); }
+.mosaic-item:first-child { grid-column: span 2; grid-row: span 2; }
+.mosaic-item img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+.mosaic-item:hover img { transform: scale(1.05); }
+.mosaic-item span {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 34px 16px 14px;
+  background: linear-gradient(to top, rgba(6,7,9,.82), transparent);
+  color: #fff; font-weight: 700; font-size: .92rem;
+}
+@media (max-width: 760px) {
+  .mosaic { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 150px; }
+}
+
+/* A gallery whose first photograph is the wide one: it takes two columns, so
+   five photos fill two rows of three with no gap. Height 0 plus min-height
+   100% keeps the lead out of the row's sizing, so the row is as tall as the
+   4:3 photo beside it; with height: 100% alone, the lead's own 3:2 set the
+   row and left a hole under its neighbour (174px on Merlot at 1440px). */
+.gallery--lead > :first-child { grid-column: span 2; aspect-ratio: auto; height: 0; min-height: 100%; }
+@media (max-width: 620px) { .gallery--lead > :first-child { grid-column: 1 / -1; aspect-ratio: 16 / 9; height: auto; min-height: 0; } }
+/* Two photographs under a list, one landscape and one portrait: square crops
+   keep both subjects whole and the pair the same height. */
+.gallery--two { grid-template-columns: repeat(2, 1fr); margin-top: 40px; }
+.gallery--two img { aspect-ratio: 1 / 1; }
+/* Side by side on a phone they were 144px each: stack them instead. */
+@media (max-width: 540px) { .gallery--two { grid-template-columns: 1fr; } .gallery--two img { aspect-ratio: 4 / 3; } }
+
+/* Home: the problem statement over a darkened jobsite photograph. */
+.problem-photo { position: relative; isolation: isolate; overflow: hidden; }
+.problem-bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.problem-photo::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(8,9,11,.9) 0%, rgba(8,9,11,.72) 45%, rgba(8,9,11,.38) 100%); }
+.problem-photo { padding-block: clamp(96px, 10vw, 160px); }
+@media (max-width: 860px) { .problem-photo::before { background: rgba(8,9,11,.8); } }
+.section-dark .problem-lines span:first-child { color: #fff; }
+.section-dark .problem-lines span + span { color: #c3c8ce; }
+.section-dark .problem-lines span:nth-child(n+3) { color: #9aa1a8; }
+.section-dark .problem-body p { color: #e6e8eb; }
+.section-dark .problem-philo { color: #fff; }
+
+/* Guide with the crew beside the copy. */
+/* With a photo, the copy and the facts stack in the left column and the photo
+   fills the right one at full height, so neither column ends in empty space. */
+.guide--photo { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); grid-template-rows: auto 1fr; row-gap: clamp(30px, 3.5vw, 48px); align-items: stretch; }
+.guide--photo .guide-say, .guide--photo .guide-facts { grid-column: 1; }
+.guide--photo .guide-facts { align-self: end; }
+.guide-photo { grid-column: 2; grid-row: 1 / span 2; margin: 0; min-height: 460px; overflow: hidden; position: relative; }
+.guide-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% center; }
+@media (max-width: 1024px) {
+  .guide--photo { grid-template-columns: 1fr; grid-template-rows: none; align-items: start; }
+  /* In normal flow, sized by the image itself. An absolutely positioned image
+     in a box that gets its height only from aspect-ratio collapsed to nothing
+     on an iPhone (Safari), though Chrome drew it. */
+  .guide-photo { grid-column: 1; grid-row: auto; min-height: 0; }
+  .guide-photo img { position: static; display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; }
+}
+
+/* "Local to Moncton": the downtown balcony portrait as a full-bleed band, the
+   card on the left so the person and the skyline stay in view. */
+.feature--local { min-height: 560px; }
+.feature--local > img { object-position: 70% 35%; }
+.feature--local::after { background: linear-gradient(to right, rgba(6,7,9,.7), rgba(6,7,9,.15) 55%, rgba(6,7,9,0)); }
+.feature--local .feature-card { margin-left: 0; margin-right: auto; max-width: 480px; }
+.feature--local .eyebrow { color: var(--orange); }
+.feature--local .feature-card p { margin-top: 16px; }
+@media (max-width: 860px) {
+  .feature--local { display: block; padding: 0; min-height: 0; }
+  .feature--local > img { position: relative; height: 300px; }
+  .feature--local::after { display: none; }
+}
+
+/* Bucket truck hero: the truck and its boom sit in the left half of the frame. */
+img[src$="lumar-bucket-truck-boom-raised.webp"] { object-position: 22% 45%; }
+
+/* Where we work (home): each office column opens with its own photograph. */
+.office-media { display: block; aspect-ratio: 16 / 10; overflow: hidden; margin-bottom: 26px; background: #000; }
+.office-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+.office-media:hover img { transform: scale(1.04); }
+.office-media img[src$="lumar-moncton-downtown-balcony.webp"] { object-position: 72% 30%; }
+
+/* Home hero: the truck and its logo sit right of centre, the trees carry the headline. */
+/* A phone shows ~30% of the frame's width: slide right so the whole logo is in it. */
+
+/* Home hero, three photographs. The base slot is a <picture>: the LuMar truck
+   on desktop, the crew at a home panel on phones -- the truck's lettering is
+   illegible at phone width (Jorge, on an iPhone), and a <picture> means a
+   phone never downloads it. Over the base, the Moncton balcony and the
+   Elsliger aerial fade in and out: 7s each, 1s cross-fade, 21s loop. The base
+   is visible from the first paint; reduced-motion visitors see only it. */
+.hero-media--rotate .hero-base, .hero-media--rotate .hero-base img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero-media--rotate img { animation: none; opacity: 1; transform: none; object-fit: cover; }
+.hero-media--rotate .hero-slide { opacity: 0; animation: heroThree 21s infinite; }
+.hero-media--rotate .hero-slide--1 { animation-delay: 6s; }
+.hero-media--rotate .hero-slide--2 { animation-delay: 13s; }
+@keyframes heroThree {
+  0%   { opacity: 0; }
+  4.8% { opacity: 1; }   /* 1s fade in */
+  33.3%{ opacity: 1; }   /* held 6s */
+  38.1%{ opacity: 0; }   /* 1s fade out, revealing the base */
+  100% { opacity: 0; }
+}
+.hero-media--rotate .hero-base img { object-position: 78% 50%; }
+.hero-media--rotate .hero-slide--1 { object-position: 70% 35%; }
+.hero-media--rotate .hero-slide--2 { object-position: 60% 50%; }
+@media (max-width: 620px) {
+  .hero-media--rotate .hero-base img { object-position: 62% 40%; }   /* the crew photo */
+  .hero-media--rotate .hero-slide--1 { object-position: 80% 30%; }
+  .hero-media--rotate .hero-slide--2 { object-position: 72% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-media--rotate .hero-slide { animation: none; opacity: 0; }
+}
+
+/* Phones: the headline and sub sit over most of the photo, so the scrim is
+   heavier and the type carries a soft shadow -- the tagline has to read on
+   every one of the three photos, not just the dark one. */
+@media (max-width: 620px) {
+  .hero-scrim { background: linear-gradient(to top, rgba(6,7,9,.95) 0%, rgba(6,7,9,.82) 40%, rgba(6,7,9,.7) 70%, rgba(6,7,9,.55) 100%); }
+  .hero h1, .hero-sub, .hero-call { text-shadow: 0 1px 2px rgba(0,0,0,.55), 0 2px 14px rgba(0,0,0,.45); }
+  .hero-sub { color: rgba(255,255,255,.92); }
+}
+
+/* Call button, phones and tablets only. Rings the page's own office. Ink icon
+   on the brand orange (5.5:1); clears the iPhone home indicator. */
+.call-fab { display: none; }
+@media (max-width: 1024px) {
+  .call-fab {
+    position: fixed; z-index: 940;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(18px, calc(env(safe-area-inset-bottom) + 10px));
+    width: 60px; height: 60px; border-radius: 0;   /* square, like every other button on the site */
+    display: grid; place-items: center;
+    background: var(--orange); color: var(--on-orange);
+    box-shadow: 0 8px 24px rgba(0,0,0,.28), 0 2px 6px rgba(0,0,0,.2);
+    transition: transform .2s var(--ease);
+  }
+  .call-fab svg { width: 26px; height: 26px; }
+  .call-fab:active { transform: scale(.94); }
+  /* Out of the way while the menu is open; the menu lists both numbers. */
+  .nav-menu.open ~ * .call-fab, body:has(.nav-menu.open) .call-fab { display: none; }
+}
+
+/* ---------- Site chat (chat_widget in build.py, behaviour in script.js) ----------
+   Desktop: a labelled launcher in the corner the call button does not use there.
+   Phones and tablets: a square icon stacked above the call button, which keeps
+   its place and its one-tap call. Open, it is deliberately plain: a title and a
+   close, the conversation, one input. The phones and the ServiceM8 link appear
+   inside a reply only when the chat hands over, not as a standing footer. */
+.chat-launch {
+  position: fixed; z-index: 930;
+  right: max(24px, env(safe-area-inset-right)); bottom: max(24px, env(safe-area-inset-bottom));
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 18px; border: 0; cursor: pointer;
+  background: var(--ink); color: var(--bg);
+  font: inherit; font-weight: 700; font-size: .92rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,.28), 0 2px 6px rgba(0,0,0,.2);
+}
+.chat-launch svg { width: 20px; height: 20px; color: var(--orange); }
+.chat-launch[aria-expanded="true"], body:has(.nav-menu.open) .chat-launch { display: none; }
+@media (max-width: 1024px) {
+  .chat-launch {
+    right: max(16px, env(safe-area-inset-right));
+    bottom: calc(max(18px, calc(env(safe-area-inset-bottom) + 10px)) + 72px);
+    width: 60px; height: 60px; padding: 0; justify-content: center;
+  }
+  .chat-launch svg { width: 24px; height: 24px; }
+  .chat-launch span { display: none; }
+}
+.chat {
+  position: fixed; z-index: 960;
+  right: max(24px, env(safe-area-inset-right)); bottom: max(24px, env(safe-area-inset-bottom));
+  /* As tall as the conversation, up to a cap: it opens as a small card, not a tall
+     empty panel, and grows as messages arrive. */
+  width: min(360px, calc(100vw - 32px)); max-height: min(520px, calc(100dvh - 48px));
+  display: flex; flex-direction: column;
+  background: var(--surface); color: var(--body); border: 1px solid var(--line);
+  box-shadow: 0 18px 48px rgba(0,0,0,.22);
+}
+.chat[hidden] { display: none; }
+.chat:focus { outline: none; }   /* focus parks on the panel on phones; its input shows its own */
+/* Phones: the whole screen above the keyboard. script.js sets top and height from
+   the visual viewport; 100dvh is the starting point before the keyboard opens. */
+@media (max-width: 560px) {
+  .chat { top: 0; left: 0; right: 0; bottom: auto; width: auto; height: 100dvh; max-height: none; border: 0; }
+  body.chat-is-open { overflow: hidden; }
+  body.chat-is-open .call-fab { display: none; }
+}
+.chat-head { display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 12px 10px 12px 18px; border-bottom: 1px solid var(--line); }
+.chat-title { margin: 0; font-weight: 700; font-size: .95rem; color: var(--ink); }
+.chat-x { background: transparent; border: 0; color: var(--muted); padding: 6px; cursor: pointer; line-height: 0; }
+.chat-x:hover { color: var(--ink); }
+.chat-x svg { width: 20px; height: 20px; }
+.chat-log { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 18px 18px 6px; display: grid; gap: 12px; align-content: start; }
+.chat-msg { font-size: .94rem; line-height: 1.55; max-width: 92%; overflow-wrap: anywhere; }
+.chat-msg--bot { justify-self: start; color: var(--ink); }
+.chat-msg--me { justify-self: end; max-width: 80%; padding: 8px 12px; background: var(--bg-alt); color: var(--ink); }
+.chat-more { display: block; margin-top: 4px; color: var(--orange-ink); font-weight: 700; font-size: .88rem; }
+.chat-handoff { display: grid; gap: 6px; margin-top: 10px; }
+.chat-handoff a { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border: 1px solid var(--line);
+  color: var(--ink); font-weight: 600; font-size: .88rem; }
+.chat-handoff a:hover { border-color: var(--orange); }
+.chat-handoff svg { width: 15px; height: 15px; color: var(--orange-ink); flex: none; }
+.chat-suggest { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 18px 12px; }
+.chat-log .chat-suggest { padding: 0; }   /* moved under the greeting by script.js */
+.chat-suggest[hidden] { display: none; }
+.chat-suggest button { border: 1px solid var(--line); background: transparent; color: var(--body);
+  padding: 6px 10px; font: inherit; font-size: .82rem; text-align: left; cursor: pointer; }
+.chat-suggest button:hover { border-color: var(--orange); color: var(--ink); }
+.chat-form { display: flex; align-items: center; margin: 0 12px; border: 1px solid var(--line); }
+.chat-form:focus-within { border-color: var(--orange); }
+.chat-form input { flex: 1; min-width: 0; border: 0; padding: 12px 12px; background: transparent;
+  color: var(--ink); font: inherit; font-size: 1rem; outline: none; }   /* 16px: iOS zooms below that */
+.chat-form button { flex: none; width: 40px; height: 40px; margin-right: 3px; border: 0; display: grid; place-items: center;
+  background: var(--orange); color: var(--on-orange); cursor: pointer; }
+.chat-form button svg { width: 18px !important; height: 18px !important; }
+.chat-note { margin: 8px 18px 12px; font-size: .72rem; color: var(--muted); }
+@media print { .chat-launch, .chat { display: none !important; } }
+
+/* ==========================================================================
+   Link-in-bio page (/links/, chrome: bare) -- added 2026-11-12
+   Its own dark surface in both themes: it is opened from Instagram on a phone
+   and should read like the LuMar Instagram grid, not like the website.
+   ========================================================================== */
+body.is-bare { background: #0b0b0c; color: #fff; min-height: 100vh; }
+.lk { max-width: 480px; margin: 0 auto; padding: 36px 16px 40px; }
+.lk-head { text-align: center; margin-bottom: 26px; }
+.lk-logo { width: 190px; height: auto; display: block; margin: 0 auto 18px; }
+.lk-tag { font-size: 1.15rem; font-weight: 700; line-height: 1.3; color: #fff; margin: 0; }
+.lk-where { margin: 6px 0 0; font-size: .78rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+.lk-book { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 58px; border-radius: 12px;
+  background: var(--orange); color: #fff; font-weight: 700; font-size: 1.1rem; text-decoration: none; }
+.lk-book svg, .lk-call svg, .lk-row svg { width: 20px; height: 20px; flex: none; }
+.lk-calls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.lk-call { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; background: #17191d;
+  border: 1px solid rgba(255,255,255,.1); color: #fff; text-decoration: none; font-size: .9rem; }
+.lk-call svg { color: var(--orange); }
+.lk-call span { display: flex; flex-direction: column; line-height: 1.25; }
+.lk-call b { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.6); font-weight: 600; }
+.lk-h { margin: 32px 0 12px; font-size: .78rem; letter-spacing: .2em; text-transform: uppercase; color: var(--orange); font-weight: 700; text-align: center; }
+.lk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.lk-tile { position: relative; display: block; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden; text-decoration: none; background: #17191d; }
+.lk-tile img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+.lk-tile::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(11,11,12,.85), rgba(11,11,12,0) 60%); }
+.lk-tile span { position: absolute; left: 12px; right: 12px; bottom: 11px; z-index: 1; color: #fff; font-weight: 800; font-size: 1rem;
+  text-transform: uppercase; letter-spacing: .02em; line-height: 1.1; }
+.lk-tile:hover img, .lk-tile:focus-visible img { transform: scale(1.04); }
+.lk-list { margin-top: 10px; display: grid; gap: 8px; }
+.lk-row { display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto; column-gap: 12px; align-items: center;
+  padding: 14px 16px; border-radius: 12px; background: #17191d; border: 1px solid rgba(255,255,255,.1); color: #fff;
+  text-decoration: none; font-weight: 700; }
+.lk-row span { grid-column: 1; grid-row: 2; font-weight: 400; font-size: .85rem; color: rgba(255,255,255,.6); }
+.lk-row svg { grid-column: 2; grid-row: 1 / 3; color: var(--orange); }
+.lk-social { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.lk-social a { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 8px; border-radius: 12px; background: #17191d;
+  border: 1px solid rgba(255,255,255,.1); color: #fff; text-decoration: none; font-size: .85rem; font-weight: 600; }
+.lk-social svg { width: 26px; height: 26px; }
+.lk-foot { margin: 28px 0 0; text-align: center; font-size: .8rem; color: rgba(255,255,255,.5); }
+.lk a:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .lk-tile img { transition: none; } }

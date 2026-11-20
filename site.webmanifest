@@ -1,0 +1,13 @@
+{
+  "name": "LuMar Electric",
+  "short_name": "LuMar",
+  "description": "Licensed electricians serving Moncton, Charlottetown and all surrounding areas across NB and PEI.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f45b1e",
+  "icons": [
+    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
